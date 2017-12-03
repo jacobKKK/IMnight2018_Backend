@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'IMnight.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_mongodb_engine',
-        'NAME': os.path.join(BASE_DIR, 'my_database'),
+        'NAME': 'my_database',
     }
 }
 
