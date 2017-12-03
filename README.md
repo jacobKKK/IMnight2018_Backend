@@ -15,14 +15,26 @@ User:
 
 # API ENDPOINT
 
-## Human
-
-- [`GET /human/drawCard/ ` 抽取本日人物](#抽取本日人物)
+### Human
+- [抽取本日人物](#抽取本日人物) `GET /human/drawCard/ `
 - `GET /human/listCard/ `
 
+## 抽取本日人物
+URL : `/human/drawCard/ `
 
-`GET /human/drawCard/ `  
-### 抽取本日人物
+Method : `GET`
+
+Auth Require : YES
+
+Data constraints
+
+```json
+{
+  data
+}
+```
+
+
 ```python
 if 當天抽的人 == null:  
   抽一個人  
