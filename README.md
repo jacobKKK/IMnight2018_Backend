@@ -7,8 +7,8 @@
 - [取得用戶資料](#取得用戶資料) `GET /users/user-id:`
 
 # Human
-- [抽取本日人物](#抽取本日人物) `GET /human/drawCard/ `
-- [擁有的表演者清單](#擁有的表演者清單) `GET /human/listCard/ `
+- [抽取本日人物](#抽取本日人物) `GET /human/drawCard/`
+- [擁有的表演者清單](#擁有的表演者清單) `GET /human/listCard/`
 
 
 ## 取得自己資料
