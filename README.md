@@ -1,15 +1,16 @@
 # IMnight2018_Backend
 
-# API ENDPOINT
+## API ENDPOINT
+
+- [User](#User)
+  - [取得自己資料](#取得自己資料) `GET /users/self`
+  - [取得用戶資料](#取得用戶資料) `GET /users/user-id:`
+
+- [Human](#Human)
+  - [抽取本日人物](#抽取本日人物) `GET /human/drawCard/`
+  - [擁有的表演者清單](#擁有的表演者清單) `GET /human/listCard/`
 
 # User
-- [取得自己資料](#取得自己資料) `GET /users/self`
-- [取得用戶資料](#取得用戶資料) `GET /users/user-id:`
-
-# Human
-- [抽取本日人物](#抽取本日人物) `GET /human/drawCard/`
-- [擁有的表演者清單](#擁有的表演者清單) `GET /human/listCard/`
-
 
 ## 取得自己資料
 URL : `/users/self`
@@ -44,6 +45,8 @@ Data constraints :
   }
 }
 ```
+
+# Human
 
 ## 抽取本日人物
 URL : `/human/drawCard/ `
