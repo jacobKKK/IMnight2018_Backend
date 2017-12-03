@@ -1,23 +1,49 @@
 # IMnight2018_Backend
 
-DataBase Module
-
-User:
-  ID
-
-
-表演者(User):
-
-
-使用者(User):  
-  當天表演者(表演者ID)  
-  表演者清單(List表演者ID)  
-
 # API ENDPOINT
 
-### Human
+# User
+- [取得自己資料](#取得自己資料) `GET /users/self`
+- [取得用戶資料](#取得用戶資料) `GET /users/user-id:`
+
+# Human
 - [抽取本日人物](#抽取本日人物) `GET /human/drawCard/ `
-- `GET /human/listCard/ `
+- [擁有的表演者清單](#擁有的表演者清單) `GET /human/listCard/ `
+
+
+## 取得自己資料
+URL : `/users/self`
+
+Method : `GET`
+
+Auth Require : YES
+
+Data constraints :
+
+```json
+{
+  "data":{
+    用戶資料
+  }
+}
+```
+
+## 取得用戶資料
+URL : `/users/user-id:`
+
+Method : `GET`
+
+Auth Require : YES
+
+Data constraints :
+
+```json
+{
+  "data":{
+    用戶資料
+  }
+}
+```
 
 ## 抽取本日人物
 URL : `/human/drawCard/ `
@@ -26,15 +52,15 @@ Method : `GET`
 
 Auth Require : YES
 
-Data constraints
+Data constraints :
 
 ```json
 {
-  data
+  "data":{
+    用戶資料
+  }
 }
 ```
-
-
 ```python
 if 當天抽的人 == null:  
   抽一個人  
@@ -43,12 +69,33 @@ if 當天抽的人 == null:
 return 當天表演者
 ```
 
-* 取的清單
+## 擁有的表演者清單
+URL : `GET /human/listCard/ `
 
-`GET /human/listCard/ `
-```python
-return 表演者清單
+Method : `GET`
+
+Auth Require : YES
+
+Data constraints :
+
+```json
+{
+  "data":{
+    "users":[
+      {
+        "id":,
+        "user_name":,
+      },
+      {
+        "id":,
+        "user_name":,
+      }
+    ]
+  }
+}
 ```
 
-
-## EARTH
+```python
+表演者清單 = client.db.col.find
+return 表演者清單
+```
