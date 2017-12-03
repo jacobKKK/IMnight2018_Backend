@@ -13,13 +13,13 @@
 # User
 
 ## 取得自己資料
-URL : `/users/self`
+**URL** : `/users/self`
 
-Method : `GET`
+**Method** : `GET`
 
-Auth Require : YES
+**Auth Require** : YES
 
-Data constraints :
+**Data constraints** :
 
 ```json
 {
@@ -30,13 +30,13 @@ Data constraints :
 ```
 
 ## 取得用戶資料
-URL : `/users/user-id:`
+**URL** : `/users/user-id:`
 
-Method : `GET`
+**Method** : `GET`
 
-Auth Require : YES
+**Auth Require** : YES
 
-Data constraints :
+**Data constraints** :
 
 ```json
 {
@@ -49,13 +49,13 @@ Data constraints :
 # Human
 
 ## 抽取本日人物
-URL : `/human/drawCard/ `
+**URL** : `/human/drawCard/ `
 
-Method : `GET`
+**Method** : `GET`
 
-Auth Require : YES
+**Auth Require** : YES
 
-Data constraints :
+**Data constraints** :
 
 ```json
 {
@@ -73,13 +73,13 @@ return 當天表演者
 ```
 
 ## 擁有的表演者清單
-URL : `GET /human/listCard/ `
+**URL** : `GET /human/listCard/ `
 
-Method : `GET`
+**Method** : `GET`
 
-Auth Require : YES
+**Auth Require** : YES
 
-Data constraints :
+**Data constraints** :
 
 ```json
 {
