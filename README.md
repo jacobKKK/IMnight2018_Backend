@@ -1,12 +1,14 @@
 # IMnight2018_Backend
 
+**switch to "api" branch before edit README.md**
+
 ## API ENDPOINT
 
-- [User](#user)
+- [user](#user)
   - [取得自己資料](#取得自己資料) `GET /users/self`
   - [取得用戶資料](#取得用戶資料) `GET /users/user-id:`
 
-- [Human](#human)
+- [human](#human)
   - [抽取本日人物](#抽取本日人物) `GET /human/drawCard/`
   - [擁有的表演者清單](#擁有的表演者清單) `GET /human/listCard/`
 
