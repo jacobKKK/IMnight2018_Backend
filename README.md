@@ -6,11 +6,12 @@
 
 - [user](#user)
   - [取得自己資料](#取得自己資料) `GET /users/self`
-  - [取得用戶資料](#取得用戶資料) `GET /users/user-id:`
+  - [取得某用戶資料](#取得某用戶資料) `GET /users/user-id:`
 
 - [human](#human)
-  - [抽取本日人物](#抽取本日人物) `GET /human/drawCard/`
-  - [擁有的表演者清單](#擁有的表演者清單) `GET /human/listCard/`
+  - [抽取本日人物](#抽取本日人物) `GET /human/daily`
+  - [用戶擁有的表演者清單](#擁有的表演者清單) `GET /human/list`
+  - [取得某表演者資料](#取得某表演者資料) `GET /human/performer-id:`
 
 # User
 
@@ -31,7 +32,7 @@
 }
 ```
 
-## 取得用戶資料
+## 取得某用戶資料
 **URL** : `/users/user-id:`
 
 **Method** : `GET`
