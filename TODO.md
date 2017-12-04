@@ -1,7 +1,7 @@
 # TODO List
-> 認領工作的時候在後面註記，完成也註記
-> 有什麼事情也記載下面
-> `[]`裡面放priority
+> 認領工作的時候在後面註記，完成也註記  
+> 有什麼事情也記載下面  
+> `[]`裡面放priority  
 
 - [4] 在accounts新增user的models (這個要等DB Scheme)
 - [3] API認領區
