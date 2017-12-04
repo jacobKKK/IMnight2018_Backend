@@ -10,7 +10,7 @@
 
 - [human](#human)
   - [抽取本日人物](#抽取本日人物) `GET /human/daily`
-  - [用戶擁有的表演者清單](#擁有的表演者清單) `GET /human/list`
+  - [用戶擁有的表演者清單](#用戶擁有的表演者清單) `GET /human/list`
   - [取得某表演者資料](#取得某表演者資料) `GET /human/performer-id:`
 
 # User
@@ -52,7 +52,7 @@
 # Human
 
 ## 抽取本日人物
-**URL** : `/human/drawCard/ `
+**URL** : `/human/list`
 
 **Method** : `GET`
 
@@ -63,7 +63,7 @@
 ```json
 {
   "data":{
-    用戶資料
+    表演者資料
   }
 }
 ```
@@ -75,8 +75,8 @@ if 當天抽的人 == null:
 return 當天表演者
 ```
 
-## 擁有的表演者清單
-**URL** : `GET /human/listCard/ `
+## 用戶擁有的表演者清單
+**URL** : `/human/list`
 
 **Method** : `GET`
 
@@ -89,12 +89,10 @@ return 當天表演者
   "data":{
     "users":[
       {
-        "id":,
-        "user_name":,
+        表演者資料
       },
       {
-        "id":,
-        "user_name":,
+        表演者資料
       }
     ]
   }
@@ -104,4 +102,21 @@ return 當天表演者
 ```python
 表演者清單 = client.db.col.find
 return 表演者清單
+```
+
+## 取得某表演者資料
+**URL** : `/human/performer-id:`
+
+**Method** : `GET`
+
+**Auth Require** : YES
+
+**Data constraints** :
+
+```json
+{
+  "data":{
+    表演者資料
+  }
+}
 ```
