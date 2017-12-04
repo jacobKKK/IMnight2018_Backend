@@ -4,7 +4,7 @@
 
 ## API ENDPOINT
 
-- [user](#user)
+- [User](#user)
   - [取得自己資料](#取得自己資料) `GET /users/self`
   - [取得某用戶資料](#取得某用戶資料) `GET /users/user-id:`
 
@@ -12,6 +12,7 @@
   - [抽取本日人物](#抽取本日人物) `GET /human/daily`
   - [用戶擁有的表演者清單](#用戶擁有的表演者清單) `GET /human/list`
   - [取得某表演者資料](#取得某表演者資料) `GET /human/performer-id:`
+
 
 # User
 
