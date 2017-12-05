@@ -4,6 +4,7 @@
 > `[]`裡面放priority  
 
 - [4] 在accounts新增user的models (這個要等DB Scheme)
+- [4] 寫處理user authentication的api
 - [3] API認領區
   - //
   - //
