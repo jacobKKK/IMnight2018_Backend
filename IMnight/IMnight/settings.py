@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # django REST framework
+    # http://www.django-rest-framework.org
+    'rest_framework',
+
     # self create apps
     'accounts',
     'human',
@@ -116,6 +120,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+# django REST framework
+# http://www.django-rest-framework.org
+
+REST_FRAMEWORK = {
+
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
