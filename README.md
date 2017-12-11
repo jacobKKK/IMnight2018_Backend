@@ -85,15 +85,22 @@
 Basing on example from installation section :doc:`Installation </installation>`
 
 - /rest-auth/facebook/ (POST)
+<<<<<<< HEAD
   用access_token登入  
+=======
+
+>>>>>>> 54ec0cd58abd562a3004bde24287fb1c6e7787db
     - access_token
     - code
 
     .. note:: ``access_token`` OR ``code`` can be used as standalone arguments, see https://github.com/Tivix/django-rest-auth/blob/master/rest_auth/registration/views.py
 
+<<<<<<< HEAD
 - /socail-auth/facebook/login/ (GET)
   redirect到facebook登入  
 
+=======
+>>>>>>> 54ec0cd58abd562a3004bde24287fb1c6e7787db
 
 # User
 
