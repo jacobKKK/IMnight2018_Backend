@@ -41,11 +41,24 @@ INSTALLED_APPS = [
     # django REST framework
     # http://www.django-rest-framework.org
     'rest_framework',
+    'rest_framework.authtoken',
+
+    # http://django-rest-auth.readthedocs.io/en/latest/index.html
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
 
     # self create apps
     'accounts',
     'human',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,6 +139,16 @@ USE_TZ = True
 REST_FRAMEWORK = {
 
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# TLS Port
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = ''
+# Application Key
+# EMAIL_HOST_PASSWORD = ''
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
