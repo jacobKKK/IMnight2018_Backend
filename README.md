@@ -23,77 +23,171 @@
 
 ## Basic
 
-- /rest-auth/login/ (POST)
+## Login 
+**URL** : `/rest-auth/login/`
 
-    - username
-    - email
-    - password
+**Method** : `POST`
 
-    Returns Token key
+**Parameter** :
 
-- /rest-auth/logout/ (POST)
+> username  
+> email  
+> password  
 
-    .. note:: ``ACCOUNT_LOGOUT_ON_GET = True`` to allow logout using GET - this is the exact same configuration from allauth. NOT recommended, see: http://django-allauth.readthedocs.io/en/latest/views.html#logout
+**Data constraints** :
 
-- /rest-auth/password/reset/ (POST)
+```json
+{
+"key" : ""
+}
+```
 
-    - email
+## Logout
+**URL** : `/rest-auth/logout/`
 
-- /rest-auth/password/reset/confirm/ (POST)
+**Method** : `POST`
 
-    - uid
-    - token
-    - new_password1
-    - new_password2
+**Data constraints** :
 
-    .. note:: uid and token are sent in email after calling /rest-auth/password/reset/
+```json
 
-- /rest-auth/password/change/ (POST)
+```
 
-    - new_password1
-    - new_password2
-    - old_password
+**Note** : 
 
-    .. note:: ``OLD_PASSWORD_FIELD_ENABLED = True`` to use old_password.
-    .. note:: ``LOGOUT_ON_PASSWORD_CHANGE = False`` to keep the user logged in after password change
+`ACCOUNT_LOGOUT_ON_GET = True` to allow logout using GET - this is the exact same configuration from allauth. NOT recommended, see: http://django-allauth.readthedocs.io/en/latest/views.html#logout
 
-- /rest-auth/user/ (GET, PUT, PATCH)
+## Password reset 
+**URL** : `/rest-auth/password/reset/`
 
-    - username
-    - first_name
-    - last_name
+**Method** : `POST`
 
-    Returns pk, username, email, first_name, last_name
+**Parameter** :
 
+> email   
+
+**Data constraints** :
+
+```json
+```
+
+## Password reset confirm
+**URL** : `/rest-auth/password/reset/confirm/`
+
+**Method** : `POST`
+
+**Parameter** :
+
+> uid  
+> token  
+> new_password1  
+> new_password2  
+
+**Data constraints** :
+
+```json
+```
+
+**Note** : 
+
+`uid` and `token` are sent in email after calling `/rest-auth/password/reset/`
+
+## Password change
+**URL** : `/rest-auth/password/change/`
+
+**Method** : `POST`
+
+**Parameter** :
+
+> new_password1  
+> new_password2  
+> old_password
+
+**Data constraints** :
+
+```json
+```
+
+**Note** : 
+
+`OLD_PASSWORD_FIELD_ENABLED = True` to use old_password.
+`LOGOUT_ON_PASSWORD_CHANGE = False` to keep the user logged in after password change
+
+## user
+**URL** : `/rest-auth/user/`
+
+**Method** : `GET`, `PUT`, `PATCH`
+
+**Parameter** :
+
+> username  
+> first_name  
+> last_name  
+
+**Data constraints** :
+
+```json
+Returns pk, username, email, first_name, last_name
+```
 
 ## Registration
 
-- /rest-auth/registration/ (POST)
+## Registration
+**URL** : `/rest-auth/registration/`
 
-    - username
-    - password1
-    - password2
-    - email
+**Method** : `POST`
 
-- /rest-auth/registration/verify-email/ (POST)
+**Parameter** :
 
-    - key
+> username  
+> password1  
+> password2  
+> email  
+
+**Data constraints** :
+
+```json
+```
+
+## Registration verify email
+**URL** : `/rest-auth/registration/verify-email/`
+
+**Method** : `POST`
+
+**Parameter** :
+
+> key  
+
+**Data constraints** :
+
+```json
+```
 
 
 ## Social Media Authentication
 
-Basing on example from installation section :doc:`Installation </installation>`
+## 用 access_token 登入 facebook
+**URL** : `/rest-auth/facebook/`
 
-- /rest-auth/facebook/ (POST)
-  用access_token登入  
-    - access_token
-    - code
+**Method** : `POST`
 
-    .. note:: ``access_token`` OR ``code`` can be used as standalone arguments, see https://github.com/Tivix/django-rest-auth/blob/master/rest_auth/registration/views.py
+**Parameter** :
 
-- /socail-auth/facebook/login/ (GET)
-  redirect到facebook登入  
+> access_token  
+> code  
 
+**Data constraints** :
+
+```json
+```
+**Note** : 
+
+`access_token` OR `code` can be used as standalone arguments, see https://github.com/Tivix/django-rest-auth/blob/master/rest_auth/registration/views.py
+
+## Redirect 到 Facebook 登入 
+**URL** : `/socail-auth/facebook/login/`
+
+**Method** : `GET`
 
 # User
 
