@@ -16,9 +16,10 @@ UserModel = get_user_model()
 
 
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField(required=False, allow_blank=True)
+    username = serializers.CharField(required=True, allow_blank=True)
     email = serializers.EmailField(required=False, allow_blank=True)
-    password = serializers.CharField(style={'input_type': 'password'})
+    password = serializers.CharField(
+        required=True, style={'input_type': 'password'})
 
     def _validate_email(self, email, password):
         user = None
