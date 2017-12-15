@@ -14,15 +14,14 @@ from allauth.account.views import ConfirmEmailView
 from allauth.account.utils import complete_signup
 from allauth.account import app_settings as allauth_settings
 
-from accounts.app_settings import (TokenSerializer,
-                                   JWTSerializer,
-                                   create_token)
+from accounts.serializers import (TokenSerializer,
+                                  JWTSerializer)
 from accounts.models import TokenModel
 from accounts.registration.serializers import (SocialLoginSerializer,
                                                VerifyEmailSerializer)
-from accounts.utils import jwt_encode
+from accounts.utils import jwt_encode, create_token
 from accounts.views import LoginView
-from .app_settings import RegisterSerializer, register_permission_classes
+from accounts.registration.serializers import RegisterSerializer
 
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters('password1', 'password2')
@@ -31,7 +30,7 @@ sensitive_post_parameters_m = method_decorator(
 
 class RegisterView(CreateAPIView):
     serializer_class = RegisterSerializer
-    permission_classes = register_permission_classes()
+    permission_classes = [AllowAny, ]
     token_model = TokenModel
 
     @sensitive_post_parameters_m

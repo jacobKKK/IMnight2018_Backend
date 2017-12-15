@@ -18,13 +18,13 @@ from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from .app_settings import (
+from .serializers import (
     TokenSerializer, UserDetailsSerializer, LoginSerializer,
     PasswordResetSerializer, PasswordResetConfirmSerializer,
-    PasswordChangeSerializer, JWTSerializer, create_token
+    PasswordChangeSerializer, JWTSerializer
 )
 from .models import TokenModel
-from .utils import jwt_encode
+from .utils import jwt_encode, create_token
 
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters(
