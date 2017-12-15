@@ -1,7 +1,7 @@
 from django.conf import settings
 
 from rest_framework.permissions import AllowAny
-from rest_auth.registration.serializers import (
+from accounts.registration.serializers import (
     RegisterSerializer as DefaultRegisterSerializer)
 from ..utils import import_callable
 

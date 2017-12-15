@@ -15,13 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from accounts.views import FacebookLogin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^rest-auth/', include('rest_auth.urls')),
-    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-    url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
-
-    url(r'^socail-auth/', include('accounts.social_urls')),
+    url(r'^auth/', include('accounts.urls')),
+    url(r'^auth/registration/', include('accounts.registration.urls')),
+    url(r'^auth/social/', include('accounts.social.urls')),
 ]

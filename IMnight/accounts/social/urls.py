@@ -1,9 +1,14 @@
 from importlib import import_module
+from django.conf.urls import url
+
+from .views import FacebookLogin
 
 from allauth.socialaccount import providers
 
 
-urlpatterns = []
+urlpatterns = [
+    url(r'^facebook/token$', FacebookLogin.as_view(), name='fb_login'),
+]
 
 for provider in providers.registry.get_list():
     try:

@@ -44,11 +44,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 
     # http://django-rest-auth.readthedocs.io/en/latest/index.html
-    'rest_auth',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'rest_auth.registration',
 
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',

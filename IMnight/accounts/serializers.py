@@ -82,7 +82,8 @@ class LoginSerializer(serializers.Serializer):
             # Authentication without using allauth
             if email:
                 try:
-                    username = UserModel.objects.get(email__iexact=email).get_username()
+                    username = UserModel.objects.get(
+                        email__iexact=email).get_username()
                 except UserModel.DoesNotExist:
                     pass
 
@@ -104,7 +105,8 @@ class LoginSerializer(serializers.Serializer):
             if app_settings.EMAIL_VERIFICATION == app_settings.EmailVerificationMethod.MANDATORY:
                 email_address = user.emailaddress_set.get(email=user.email)
                 if not email_address.verified:
-                    raise serializers.ValidationError(_('E-mail is not verified.'))
+                    raise serializers.ValidationError(
+                        _('E-mail is not verified.'))
 
         attrs['user'] = user
         return attrs
@@ -144,9 +146,11 @@ class JWTSerializer(serializers.Serializer):
         """
         rest_auth_serializers = getattr(settings, 'REST_AUTH_SERIALIZERS', {})
         JWTUserDetailsSerializer = import_callable(
-            rest_auth_serializers.get('USER_DETAILS_SERIALIZER', UserDetailsSerializer)
+            rest_auth_serializers.get(
+                'USER_DETAILS_SERIALIZER', UserDetailsSerializer)
         )
-        user_data = JWTUserDetailsSerializer(obj['user'], context=self.context).data
+        user_data = JWTUserDetailsSerializer(
+            obj['user'], context=self.context).data
         return user_data
 
 
@@ -164,7 +168,8 @@ class PasswordResetSerializer(serializers.Serializer):
 
     def validate_email(self, value):
         # Create PasswordResetForm with the serializer
-        self.reset_form = self.password_reset_form_class(data=self.initial_data)
+        self.reset_form = self.password_reset_form_class(
+            data=self.initial_data)
         if not self.reset_form.is_valid():
             raise serializers.ValidationError(self.reset_form.errors)
 

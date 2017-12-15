@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from rest_auth.serializers import (
+from accounts.serializers import (
     TokenSerializer as DefaultTokenSerializer,
     JWTSerializer as DefaultJWTSerializer,
     UserDetailsSerializer as DefaultUserDetailsSerializer,

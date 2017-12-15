@@ -14,14 +14,14 @@ from allauth.account.views import ConfirmEmailView
 from allauth.account.utils import complete_signup
 from allauth.account import app_settings as allauth_settings
 
-from rest_auth.app_settings import (TokenSerializer,
-                                    JWTSerializer,
-                                    create_token)
-from rest_auth.models import TokenModel
-from rest_auth.registration.serializers import (SocialLoginSerializer,
-                                                VerifyEmailSerializer)
-from rest_auth.utils import jwt_encode
-from rest_auth.views import LoginView
+from accounts.app_settings import (TokenSerializer,
+                                   JWTSerializer,
+                                   create_token)
+from accounts.models import TokenModel
+from accounts.registration.serializers import (SocialLoginSerializer,
+                                               VerifyEmailSerializer)
+from accounts.utils import jwt_encode
+from accounts.views import LoginView
 from .app_settings import RegisterSerializer, register_permission_classes
 
 sensitive_post_parameters_m = method_decorator(
