@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
+    'rest_framework_swagger',
+
     # http://django-rest-auth.readthedocs.io/en/latest/index.html
     'django.contrib.sites',
     'allauth',
