@@ -29,6 +29,9 @@ sensitive_post_parameters_m = method_decorator(
 
 
 class RegisterView(CreateAPIView):
+    """
+    註冊一個新帳號
+    """
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny, ]
     token_model = TokenModel
