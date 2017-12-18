@@ -1,6 +1,10 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
-from rest_framework import generics
+from rest_framework import status
+from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView, ListAPIView
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.schemas import AutoSchema
 import coreapi
@@ -11,20 +15,7 @@ from human.serializers import UserDetailsSerializer
 UserModel = get_user_model()
 
 
-class UserDetailsView(generics.RetrieveUpdateAPIView):
-    """
-
-    get:
-    Display fields: pk, username, email, first_name, last_name
-
-    retrieve:
-    Accepted fields: username, first_name, last_name
-
-    Read-only fields: pk, email
-
-    Returns UserModel fields.
-    """
-
+class SelfDetailsView(RetrieveUpdateAPIView):
     serializer_class = UserDetailsSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -38,3 +29,19 @@ class UserDetailsView(generics.RetrieveUpdateAPIView):
         https://github.com/Tivix/django-rest-auth/issues/275
         """
         return UserModel.objects.none()
+
+
+class UserDetailsView(ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserDetailsSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = User.objects.all()
+        if 'username' in self.kwargs:
+            username = self.kwargs['username']
+            queryset = queryset.filter(username=username)
+        return queryset
