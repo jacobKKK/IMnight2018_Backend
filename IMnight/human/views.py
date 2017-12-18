@@ -54,5 +54,8 @@ class RelationshipDetailsView(ListAPIView):
     def get_queryset(self):
         user = self.request.user
         queryset = Relationship.objects.filter(client=user)
+        """
+        這裡有Bug 
+        """
         # queryset = Relationship.objects.get_performers(user)
         return queryset
