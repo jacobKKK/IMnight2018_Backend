@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.schemas import AutoSchema
 import coreapi
 
-from human.models import User
-from human.serializers import UserDetailsSerializer
+from human.models import Relationship
+from human.serializers import UserDetailsSerializer, RelationshipSerializer
 
 UserModel = get_user_model()
 
@@ -44,4 +44,15 @@ class UserDetailsView(ListAPIView):
         if 'username' in self.kwargs:
             username = self.kwargs['username']
             queryset = queryset.filter(username=username)
+        return queryset
+
+
+class RelationshipDetailsView(ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = RelationshipSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Relationship.objects.filter(client=user)
+        # queryset = Relationship.objects.get_performers(user)
         return queryset

@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from human.models import Profile
+from human.models import Profile, Relationship
 
 UserModel = get_user_model()
 
@@ -37,3 +37,10 @@ class UserDetailsSerializer(serializers.ModelSerializer):
             'birth_date', instance.profile.birth_date)
 
         return instance
+
+
+class RelationshipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Relationship
+        fields = ('client', 'performer', 'created')
+        # fields = '__all__'
