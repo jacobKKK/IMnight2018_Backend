@@ -25,7 +25,7 @@ SECRET_KEY = 'ti#_4flcu1o_%!)rxqvujigi5=1=kl!9k9f(m^r1-+q8m+v*ub'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['140.112.145.148']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,11 +41,24 @@ INSTALLED_APPS = [
     # django REST framework
     # http://www.django-rest-framework.org
     'rest_framework',
+    'rest_framework.authtoken',
+
+    'rest_framework_swagger',
+
+    # http://django-rest-auth.readthedocs.io/en/latest/index.html
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
 
     # self create apps
     'accounts',
     'human',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,6 +139,16 @@ USE_TZ = True
 REST_FRAMEWORK = {
 
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# TLS Port
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = ''
+# Application Key
+# EMAIL_HOST_PASSWORD = ''
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
