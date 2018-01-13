@@ -40,7 +40,10 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
 
 class RelationshipSerializer(serializers.ModelSerializer):
+    client = UserDetailsSerializer(required=True)
+    performer = UserDetailsSerializer(required=True)
+
     class Meta:
         model = Relationship
-        fields = ('client', 'performer', 'created')
-        # fields = '__all__'
+        #fields = ('client', 'performer', 'created')
+        fields = '__all__'
