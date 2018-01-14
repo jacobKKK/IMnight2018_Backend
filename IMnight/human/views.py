@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.schemas import AutoSchema
 import coreapi
 
-from human.models import Relationship
-from human.serializers import UserDetailsSerializer, RelationshipSerializer
+from human.models import Relationship, DailyPerformer
+from human.serializers import UserDetailsSerializer, RelationshipSerializer, DailyPerformerSerializer
 
 UserModel = get_user_model()
 
@@ -53,9 +53,21 @@ class RelationshipDetailsView(ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Relationship.objects.filter(client=user)
+        # queryset = Relationship.objects.filter(client=user)
         """
         這裡有Bug 
         """
-        # queryset = Relationship.objects.get_performers(user)
+        queryset = Relationship.objects.get_performers(user)
         return queryset
+# 
+class DailyPerformerView(ListAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = DailyPerformerSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+
+        queryset = DailyPerformer.objects.get_daily(user)
+        return queryset
+
+
