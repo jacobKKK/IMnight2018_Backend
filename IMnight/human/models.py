@@ -62,8 +62,10 @@ class RelationshipManager(models.Manager):
         daily_performer = Relationship.objects.filter(
             client=user).filter(created__date=datetime.date.today())
         if daily_performer:
+            # already draw daily performer
             return daily_performer
         else:
+            # not yet draw daily performer
             own_relationship = Relationship.objects.filter(client=user).all()
             own_performer_pk = []
 
