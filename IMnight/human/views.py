@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView, ListAPIView
@@ -58,6 +59,7 @@ class RelationshipDetailsView(ListAPIView):
         這裡有Bug 
         """
         queryset = Relationship.objects.get_performers(user)
+
         return queryset
 # 
 class DailyPerformerView(ListAPIView):
