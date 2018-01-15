@@ -104,7 +104,7 @@ class DailyPerformerManager(models.Manager):
                 daily.updated = datetime.date.today()
                 super(daily, self).save()
                 return daily
-
+    
 class DailyPerformer(models.Model):
     client = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='dailyclient')
