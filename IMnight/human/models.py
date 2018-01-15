@@ -79,16 +79,23 @@ class RelationshipManager(models.Manager):
             # random choice a performer and return
             # check if own all performers
             num = len(all_performers)
-            if num > 0: 
-                index = random.randint(0, num-1)
+            if num <= 0:
+                # all performer are draw
+                return Relationship.objects.none()
+
+            else:
+                index = random.randint(0, num - 1)
                 performer = all_performers[index]
-                daily_performer = self.create_relationship(client=user, performer=performer)        
+                daily_performer = self.create_relationship(
+                    client=user, performer=performer)
                 daily_performer.save()
-            # make it iteralbe
-            l = []
-            l.append(daily_performer)
-            return l
-            
+
+            # return QuerySet
+            daily_performer = Relationship.objects.filter(
+                client=user).filter(created__date=datetime.date.today())
+            return daily_performer
+
+
 class Relationship(models.Model):
     client = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='client')
