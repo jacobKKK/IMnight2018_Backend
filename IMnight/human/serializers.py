@@ -48,12 +48,3 @@ class RelationshipSerializer(serializers.ModelSerializer):
 
         fields = ('client', 'performer', 'created')
         # fields = '__all__'
-
-
-# class DailyPerformerSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = DailyPerformer
-#         fields = ('client', 'performer', 'updated')
-#
-#         #fields = ('client', 'performer', 'created')
-#         fields = '__all__'

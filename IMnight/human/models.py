@@ -61,6 +61,7 @@ class RelationshipManager(models.Manager):
     def get_daily(self, user):
         daily_performer = Relationship.objects.filter(
             client=user).filter(created__date=datetime.date.today())
+
         if daily_performer:
             # already draw daily performer
             return daily_performer
@@ -73,11 +74,21 @@ class RelationshipManager(models.Manager):
                 own_performer_pk.append(relationship.performer.pk)
 
             all_performers = User.objects.filter(
-                groups__name='Performers').exclude(pk__in=own_performer_pk)
+                groups__name='Performers').exclude(pk__in=own_performer_pk).all()
 
             # random choice a performer and return
-
-
+            # check if own all performers
+            num = len(all_performers)
+            if num > 0: 
+                index = random.randint(0, num-1)
+                performer = all_performers[index]
+                daily_performer = self.create_relationship(client=user, performer=performer)        
+                daily_performer.save()
+            # make it iteralbe
+            l = []
+            l.append(daily_performer)
+            return l
+            
 class Relationship(models.Model):
     client = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='client')
@@ -107,36 +118,3 @@ class Relationship(models.Model):
                 "self.client and slef.performer can't be same person")
 
         super(Relationship, self).save(*args, **kwargs)
-
-
-class DailyPerformerManager(models.Manager):
-    def get_daily(self, user):
-        if not is_client(user):
-            return ValidationError("You can't get clients list from a client")
-        today = datetime.date.today()
-        daily = DailyPerformer.objects.filter(client=user)
-        if today <= daily.updated:
-            return daily
-
-        #update
-        own_performers = Relationship.objects.filter(client=user).all()
-        all_performers = User.objects.filter(groups__name='Performer').all()
-        num = len(all_performers)
-        start = random.randint(0, num)
-        for i in range(start, start+num):
-            if all_performers[i%num] not in own_performers:
-                daily.performer = all_performers[i%num]
-                daily.updated = datetime.date.today()
-                super(daily, self).save()
-                return daily
-    
-class DailyPerformer(models.Model):
-    client = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='dailyclient')
-    performer = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='dailyperformer')
-    updated = models.DateField(null=True)
-
-    objects = DailyPerformerManager()
-
-
