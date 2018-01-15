@@ -10,9 +10,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.schemas import AutoSchema
 import coreapi
 
-from human.models import Relationship  # , DailyPerformer
-# , DailyPerformerSerializer
+from human.models import Relationship
 from human.serializers import UserDetailsSerializer, RelationshipSerializer
+
 
 UserModel = get_user_model()
 
@@ -64,7 +64,6 @@ class RelationshipDetailsView(ListAPIView):
 class DailyPerformerView(ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = RelationshipSerializer
-    # serializer_class = DailyPerformerSerializer
 
     def get_queryset(self):
         user = self.request.user

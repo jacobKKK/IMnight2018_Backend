@@ -7,7 +7,6 @@ from django.core.exceptions import ValidationError
 
 import datetime
 import random
-import itertools
 
 
 class Profile(models.Model):
@@ -91,8 +90,7 @@ class RelationshipManager(models.Manager):
                 daily_performer.save()
 
             # return QuerySet
-            daily_performer = Relationship.objects.filter(
-                client=user).filter(created__date=datetime.date.today())
+            daily_performer = [daily_performer]
             return daily_performer
 
 
