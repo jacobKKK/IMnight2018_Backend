@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from human.models import Profile, Relationship, DailyPerformer
+from human.models import Profile, Relationship  # , DailyPerformer
 
 UserModel = get_user_model()
 
@@ -50,11 +50,10 @@ class RelationshipSerializer(serializers.ModelSerializer):
         # fields = '__all__'
 
 
-class DailyPerformerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DailyPerformer
-        fields = ('client', 'performer', 'updated')
-
-        #fields = ('client', 'performer', 'created')
-        fields = '__all__'
-
+# class DailyPerformerSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = DailyPerformer
+#         fields = ('client', 'performer', 'updated')
+#
+#         #fields = ('client', 'performer', 'created')
+#         fields = '__all__'
