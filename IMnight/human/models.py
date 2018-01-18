@@ -19,6 +19,9 @@ class Profile(models.Model):
     # daily_performer = models.ForeignKey(
     #     DailyPerformer, on_delete=models.CASCADE, related_name='daily_performer')
 
+    def __str__(self):
+        return self.user.username
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -113,8 +116,8 @@ class Relationship(models.Model):
         # verbose_name_plural = 'Relationship'
         unique_together = ('client', 'performer')
 
-    def __unicode__(self):
-        return "Client #%s has relationship with Performer #%s" % (self.client, self.performer)
+    def __str__(self):
+        return "Client \"%s\" Performer \"%s\"" % (self.client.username, self.performer.username)
 
     def save(self, *args, **kwargs):
         # Some identity check for the User

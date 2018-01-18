@@ -26,7 +26,7 @@ class ProfileInLine(admin.StackedInline):
     extra = 0
 
 
-class UserAdmin(UserAdmin):
+class UserAdmin(admin.ModelAdmin):
     inlines = (ProfileInLine, ClientInLine, PerformerInLine,)
 
     def get_inline_instances(self, request, obj=None):
@@ -35,8 +35,16 @@ class UserAdmin(UserAdmin):
         return super(UserAdmin, self).get_inline_instances(request, obj)
 
 
+class RelationshipAdmin(admin.ModelAdmin):
+    list_display = ('label', 'client', 'performer')
+
+
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('room', 'handle', 'message', 'timestamp')
+
+
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Profile)
-admin.site.register(Relationship)
-admin.site.register(Message)
+admin.site.register(Relationship, RelationshipAdmin)
+admin.site.register(Message, MessageAdmin)

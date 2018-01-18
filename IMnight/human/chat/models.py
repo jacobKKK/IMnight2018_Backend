@@ -12,7 +12,7 @@ class Message(models.Model):
     message = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now, db_index=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '[{timestamp}] {handle}: {message}'.format(**self.as_dict())
 
     @property
