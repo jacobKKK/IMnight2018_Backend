@@ -24,7 +24,11 @@ class ChatView(ListAPIView):
             print ("ws room does not exist label=%s", label)
             return []
 
-        # We want to show the last 50 messages, ordered most-recent-last
-        messages = reversed(room.messages.order_by('-timestamp')[:50])
+        messages = room.messages.order_by('timestamp')
+
+        # query_range = self.request.query_params.get('query_range', None)
+        # if query_range is not None:
+        #     start, end = query_range.split('-')
+        #
 
         return messages
