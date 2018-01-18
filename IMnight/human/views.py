@@ -13,6 +13,7 @@ import coreapi
 from human.models import Relationship
 from human.serializers import UserDetailsSerializer, RelationshipSerializer
 
+
 UserModel = get_user_model()
 
 
@@ -54,6 +55,18 @@ class RelationshipDetailsView(ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Relationship.objects.filter(client=user)
 
+        queryset = Relationship.objects.get_performers(user)
+
+        return queryset
+
+
+class DailyPerformerView(ListAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = RelationshipSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+
+        queryset = Relationship.objects.get_daily(user)
         return queryset
