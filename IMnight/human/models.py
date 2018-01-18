@@ -3,10 +3,13 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.utils.text import slugify
 from django.core.exceptions import ValidationError
+
 
 import datetime
 import random
+import hashlib
 
 
 class Profile(models.Model):
@@ -100,6 +103,7 @@ class Relationship(models.Model):
     performer = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='performer')
     created = models.DateTimeField(default=timezone.now)
+    label = models.SlugField(unique=True)
 
     # set the model manager to FriendshipManager()
     objects = RelationshipManager()
@@ -121,5 +125,11 @@ class Relationship(models.Model):
         if self.client == self.performer:
             raise ValidationError(
                 "self.client and slef.performer can't be same person")
+
+        # create unique label used for chatroom
+        hashkey = self.client.username + self.performer.username
+        relationship_label = hash(hashkey) % (10 ** 20)
+        relationship_label = slugify(relationship_label)
+        self.label = relationship_label
 
         super(Relationship, self).save(*args, **kwargs)

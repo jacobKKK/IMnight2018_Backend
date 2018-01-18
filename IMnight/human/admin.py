@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from .models import Profile, Relationship
+
+from human.models import Profile, Relationship
+from human.chat.models import Message
 
 
 class RelationshipInLine(admin.StackedInline):
@@ -37,3 +39,4 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Profile)
 admin.site.register(Relationship)
+admin.site.register(Message)
