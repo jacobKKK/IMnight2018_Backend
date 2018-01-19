@@ -18,6 +18,9 @@ UserModel = get_user_model()
 
 
 class SelfDetailsView(RetrieveUpdateAPIView):
+    """
+    取得用戶自己的個人資料（Include Profile）
+    """
     serializer_class = UserDetailsSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -34,6 +37,9 @@ class SelfDetailsView(RetrieveUpdateAPIView):
 
 
 class UserDetailsView(ListAPIView):
+    """
+    取得某特定用戶資料（Include Profile）
+    """
     permission_classes = (IsAuthenticated,)
     serializer_class = UserDetailsSerializer
 
@@ -50,6 +56,9 @@ class UserDetailsView(ListAPIView):
 
 
 class RelationshipDetailsView(ListAPIView):
+    """
+    取得用戶自己以抽過的performer
+    """
     permission_classes = (IsAuthenticated,)
     serializer_class = RelationshipSerializer
 
@@ -62,6 +71,10 @@ class RelationshipDetailsView(ListAPIView):
 
 
 class DailyPerformerView(ListAPIView):
+    """
+    取得當日的daily performer
+    當所有perfromer都被抽完之後會return []   
+    """
     permission_classes = (IsAuthenticated, )
     serializer_class = RelationshipSerializer
 

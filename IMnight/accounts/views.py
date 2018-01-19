@@ -15,7 +15,7 @@ from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from .serializers import (
+from accounts.serializers import (
     TokenSerializer, UserDetailsSerializer, LoginSerializer,
     PasswordResetSerializer, PasswordResetConfirmSerializer,
     PasswordChangeSerializer, JWTSerializer
@@ -32,6 +32,8 @@ sensitive_post_parameters_m = method_decorator(
 
 class LoginView(GenericAPIView):
     """
+    以email註冊的登入方式
+
     Check the credentials and return the REST Token
     if the credentials are valid and authenticated.
     Calls Django Auth login method to register User ID
