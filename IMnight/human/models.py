@@ -72,10 +72,15 @@ class RelationshipManager(models.Manager):
 
     def get_daily(self, user):
         if is_performer(user):
-            return ValidationError("You can't get daily_performer from a performer")
+            raise ValidationError(
+                "You can't get daily_performer from a performer")
 
-        daily_performer = Relationship.objects.filter(
-            client=user).filter(created__date=datetime.date.today())
+        try:
+            daily_performer = Relationship.objects.filter(
+                client=user).filter(created__date=datetime.date.today())
+        except Exception as error:
+            testlog.error(error)
+            return Relationship.objects.none()
 
         if daily_performer:
             # already draw daily performer
@@ -84,12 +89,15 @@ class RelationshipManager(models.Manager):
             # not yet draw daily performer
             own_relationship = Relationship.objects.filter(client=user).all()
             own_performer_pk = []
-
             for relationship in own_relationship:
                 own_performer_pk.append(relationship.performer.pk)
 
-            all_performers = User.objects.filter(
-                groups__name='Performers').exclude(pk__in=own_performer_pk).all()
+            try:
+                all_performers = User.objects.filter(
+                    groups__name='Performers').exclude(pk__in=own_performer_pk).all()
+            except Exception as error:
+                testlog.error(error)
+                all_performers = []
 
             """random choice a performer and return"""
             num = len(all_performers)
@@ -101,15 +109,21 @@ class RelationshipManager(models.Manager):
             else:
                 index = random.randint(0, num - 1)
                 performer = all_performers[index]
-                daily_performer = self.create(client=user, performer=performer)
-                try:
-                    daily_performer.save()
-                except ValidationError as e:
-                    raise
 
-                # return objects must be iterable
-                daily_performer = [daily_performer]
-                return daily_performer
+                try:
+                    daily_performer = self.create(
+                        client=user, performer=performer)
+                    daily_performer.save()
+                except ValidationError as error:
+                    testlog.error(error)
+                    return Relationship.objects.none()
+                except Exception as error:
+                    testlog.warning(error)
+                    return Relationship.objects.none()
+                else:
+                    # return objects must be iterable
+                    daily_performer = [daily_performer]
+                    return daily_performer
 
 
 class Relationship(models.Model):
@@ -126,7 +140,7 @@ class Relationship(models.Model):
 
     class Meta:
         verbose_name = 'Relationship'
-        verbose_name_plural = 'My Relationship'
+        verbose_name_plural = 'My Relationships'
         unique_together = ('client', 'performer')
 
     def __str__(self):
@@ -135,11 +149,11 @@ class Relationship(models.Model):
     def save(self, *args, **kwargs):
         # Some identity check for the User
         if not is_client(self.client):
-            return ValidationError("self.client is not in Clients Group")
+            raise ValidationError("self.client is not in Clients Group")
         if not is_performer(self.performer):
-            return ValidationError("self.performer is not in Performers Group")
+            raise ValidationError("self.performer is not in Performers Group")
         if self.client == self.performer:
-            return ValidationError(
+            raise ValidationError(
                 "self.client and slef.performer can't be same person")
 
         # create unique label used for chatroom
