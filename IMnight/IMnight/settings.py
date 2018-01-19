@@ -217,6 +217,9 @@ LOGGING = {
         },
     },
     'loggers': {
+        'testdevelop': {
+            'handlers': ['console', ],
+        }
         'coffeehouse': {
             'handlers': ['development_logfile', 'production_logfile'],
         },

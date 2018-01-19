@@ -9,8 +9,9 @@ from human.chat.models import Message
 
 import re
 import json
+import logging
 
-# log = logging.getLogger('console-logger')
+log = logging.getLogger('console-logger')
 
 
 @channel_session
