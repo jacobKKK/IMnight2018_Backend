@@ -1,0 +1,54 @@
+ERROR - [2018-01-19 16:09:18] (exception 65594 123145322815488) Internal Server Error: /human/performer/list/
+Traceback (most recent call last):
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/channels/handler.py", line 243, in process_exception_by_middleware
+    return super(AsgiHandler, self).process_exception_by_middleware(exception, request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/generics.py", line 201, in get
+    return self.list(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/mixins.py", line 40, in list
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/YuChih/Project/IMnight2018_Backend/IMnight/human/views.py", line 77, in get_queryset
+    return queryset
+UnboundLocalError: local variable 'queryset' referenced before assignment
+ERROR - [2018-01-19 16:09:21] (exception 65594 123145328070656) Internal Server Error: /human/performer/list/
+Traceback (most recent call last):
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/channels/handler.py", line 243, in process_exception_by_middleware
+    return super(AsgiHandler, self).process_exception_by_middleware(exception, request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/generics.py", line 201, in get
+    return self.list(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/rest_framework/mixins.py", line 40, in list
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/YuChih/Project/IMnight2018_Backend/IMnight/human/views.py", line 77, in get_queryset
+    return queryset
+UnboundLocalError: local variable 'queryset' referenced before assignment
