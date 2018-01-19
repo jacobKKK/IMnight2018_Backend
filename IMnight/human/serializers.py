@@ -1,11 +1,8 @@
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from human.models import Profile, Relationship  # , DailyPerformer
-
-UserModel = get_user_model()
+from human.models import Profile, Relationship
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -18,7 +15,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(required=True)
 
     class Meta:
-        model = UserModel
+        model = User
         fields = ('pk', 'username', 'email',
                   'first_name', 'last_name', 'profile')
         read_only_fields = ('email', )
@@ -32,6 +29,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         instance.last_name = validated_data.get(
             'last_name', instance.last_name)
 
+        # update Profile and User sametime
         instance.profile.bio = profile_data.get('bio', instance.profile.bio)
         instance.profile.birth_date = profile_data.get(
             'birth_date', instance.profile.birth_date)
