@@ -196,14 +196,14 @@ LOGGING = {
             'level': 'DEBUG',
             'filters': ['require_debug_true'],
             'class': 'logging.FileHandler',
-            'filename': '/tmp/django_dev.log',
+            'filename': 'tmp/django_dev.log',
             'formatter': 'verbose'
         },
         'production_logfile': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/django/django_production.log',
+            'filename': 'tmp/django_production.log',
             'maxBytes': 1024 * 1024 * 100,  # 100MB
             'backupCount': 5,
             'formatter': 'simple'
@@ -212,14 +212,14 @@ LOGGING = {
             'level': 'DEBUG',
             'filters': ['require_debug_false', 'require_debug_true'],
             'class': 'logging.handlers.WatchedFileHandler',
-            'filename': '/var/log/dba/django_dba.log',
+            'filename': 'tmp/django_dba.log',
             'formatter': 'simple'
         },
     },
     'loggers': {
         'testdevelop': {
             'handlers': ['console', ],
-        }
+        },
         'coffeehouse': {
             'handlers': ['development_logfile', 'production_logfile'],
         },
@@ -232,7 +232,7 @@ LOGGING = {
         'py.warnings': {
             'handlers': ['development_logfile'],
         },
-    }
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse',

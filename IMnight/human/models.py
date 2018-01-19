@@ -10,6 +10,8 @@ from django.core.exceptions import ValidationError
 import datetime
 import random
 import hashlib
+import logging
+testlog = logging.getLogger('testdevelop')
 
 
 class Profile(models.Model):
@@ -55,14 +57,15 @@ def is_performer(user):
 class RelationshipManager(models.Manager):
     def get_performers(self, user):
         if is_performer(user):
-            return ValidationError("You can't get performers list from a performer")
+            raise ValidationError(
+                "You can't get performers list from a performer")
 
         performers = Relationship.objects.filter(client=user).all()
         return performers
 
     def get_clients(self, user):
         if is_client(user):
-            return ValidationError("You can't get clients list from a client")
+            raise ValidationError("You can't get clients list from a client")
 
         clients = Relationship.objects.filter(performer=user).all()
         return clients

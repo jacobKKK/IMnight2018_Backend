@@ -13,6 +13,8 @@ import coreapi
 from human.models import Relationship
 from human.serializers import UserDetailsSerializer, RelationshipSerializer
 
+import logging
+testlog = logging.getLogger('testdevelop')
 
 UserModel = get_user_model()
 
@@ -65,15 +67,20 @@ class RelationshipDetailsView(ListAPIView):
     def get_queryset(self):
         user = self.request.user
 
-        queryset = Relationship.objects.get_performers(user)
-
-        return queryset
+        try:
+            queryset = Relationship.objects.get_performers(user)
+        except ValidationError as error:
+            testlog.error(error)
+        except Exception as error:
+            testlog.warning(error)
+        else:
+            return queryset
 
 
 class DailyPerformerView(ListAPIView):
     """
     取得當日的daily performer
-    當所有perfromer都被抽完之後會return []   
+    當所有perfromer都被抽完之後會return []
     """
     permission_classes = (IsAuthenticated, )
     serializer_class = RelationshipSerializer
