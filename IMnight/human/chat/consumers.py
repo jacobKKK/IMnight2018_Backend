@@ -11,7 +11,7 @@ import re
 import json
 import logging
 
-log = logging.getLogger('console-logger')
+testlog = logging.getLogger('testdevelop')
 
 
 @channel_session
@@ -24,12 +24,15 @@ def ws_connect(message):
     # this is for checking websocket address
     prefix, prefix2, label = message['path'].strip("/").split("/")
     if prefix != 'human' and prefix2 != 'chat':
-        # log.error('invalid ws path=%s', message['path'])
+        testlog.error('invalid ws path=%s', message['path'])
         return
     try:
         room = Relationship.objects.get(label=label)
     except Relationship.DoesNotExist:
-        # log.error('ws room does not exist label=%s', label)
+        testlog.error('No relationship have this label=%s', label)
+        return
+    except Exception as error:
+        testlog.warning(error)
         return
 
     # Accept the incoming connection
@@ -54,27 +57,35 @@ def ws_receive(message):
         label = message.channel_session['room']
         room = Relationship.objects.get(label=label)
     except KeyError:
-        # log.error('no room in channel_session')
+        testlog.error(
+            'no room label in channel_session, full message: \n%s', message)
         return
     except Relationship.DoesNotExist:
-        # log.error('recieved message, buy room does not exist label=%s', label)
+        testlog.error(
+            'recieved message, but no relationship have this label=%s', label)
+        return
+    except Exception as error:
+        testlog.warning(error)
         return
 
     # Parse out a chat message from the content text, bailing if it doesn't
     try:
         data = json.loads(message.content['text'])
     except ValueError:
-        # log.error("ws message isn't json text=%s", text)
+        testlog.error(
+            "message send by ws isn't json text, full message: \n%s", message)
+        return
+    except Exception as error:
+        testlog.warning(error)
         return
 
     # conform to the expected message format.
     if set(data.keys()) != set(('handle', 'message')):
-        # log.error("ws message unexpected format data=%s", data)
+        testlog.warning(
+            "message send by ws contain unexpected format data: \n%s", data)
         return
 
     if data:
-        # log.error('chat message room=%s handle=%s message=%s',
-                  # room.label, data['handle'], data['message'])
         handle = data["handle"]
         user = User.objects.get(username=handle)
         msg = data["message"]
@@ -85,6 +96,9 @@ def ws_receive(message):
               channel_layer=message.channel_layer).send({
                   'text': json.dumps(m.as_dict())
               })
+    else:
+        testlog.warning(
+            "message data send by ws is NULL, full message: \n%s", message)
 
 
 @channel_session
@@ -92,13 +106,5 @@ def ws_disconnect(message):
     """
     called when websocket is closed
     """
-    try:
-        label = message.channel_session['room']
-        room = Relationship.objects.get(label=label)
-
-        # remove this client from Group
-        Group('chat-' + label,
-              channel_layer=message.channel_layer).discard(message.reply_channel)
-    except Relationship.DoesNotExist:
-        # log.error('recieved message, buy room does not exist label=%s', label)
-        return
+    Group('chat-' + label,
+          channel_layer=message.channel_layer).discard(message.reply_channel)
