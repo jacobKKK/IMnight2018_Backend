@@ -1,41 +1,39 @@
-import re
-import json
-# import logging
+from django.contrib.auth.models import User
+
 from channels import Group
 from channels.sessions import channel_session
 
 from human.models import Relationship
 from human.chat.models import Message
 
-from django.contrib.auth.models import User
+
+import re
+import json
 
 # log = logging.getLogger('console-logger')
 
 
 @channel_session
-# Connected to websocket.connect
 def ws_connect(message):
-    # the message path is /chat/{label}/
-    # get prefix -> "chat"
-    # get label -> "{label}"
-    try:
-        prefix, prefix2, label = message['path'].strip("/").split("/")
-        if prefix != 'human' and prefix2 != 'chat':
-            log.error('invalid ws path=%s', message['path'])
-            return
-        room = Relationship.objects.get(label=label)
-    except ValueError:
+    """
+    establish a websocket connection and add the user into a chatroom group
+    """
+
+    # this is for checking websocket address
+    prefix, prefix2, label = message['path'].strip("/").split("/")
+    if prefix != 'human' and prefix2 != 'chat':
         # log.error('invalid ws path=%s', message['path'])
         return
+    try:
+        room = Relationship.objects.get(label=label)
     except Relationship.DoesNotExist:
         # log.error('ws room does not exist label=%s', label)
         return
 
-    # log.info('chat connect room=%s client=%s:%s',
-        # room.label, message['client'][0], message['client'][1])
-
     # Accept the incoming connection
-    message.reply_channel.send({'accept': True})
+    message.reply_channel.send(
+        {'accept': True}
+    )
 
     message.channel_session['room'] = room.label
 
@@ -45,7 +43,6 @@ def ws_connect(message):
 
 
 @channel_session
-# Connected to websocket.receive
 def ws_receive(message):
     # Look up the room from the channel session, bailing if it doesn't exist
     try:
@@ -88,7 +85,6 @@ def ws_receive(message):
 
 
 @channel_session
-# Connected to websocket.disconnect
 def ws_disconnect(message):
     try:
         label = message.channel_session['room']
