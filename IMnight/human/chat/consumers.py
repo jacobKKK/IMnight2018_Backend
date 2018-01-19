@@ -16,6 +16,7 @@ import json
 @channel_session
 def ws_connect(message):
     """
+    called when a websocket is create
     establish a websocket connection and add the user into a chatroom group
     """
 
@@ -44,6 +45,9 @@ def ws_connect(message):
 
 @channel_session
 def ws_receive(message):
+    """
+    called when message is recieved websocket
+    """
     # Look up the room from the channel session, bailing if it doesn't exist
     try:
         label = message.channel_session['room']
@@ -78,14 +82,15 @@ def ws_receive(message):
         # send the massage to the clients in Group
         Group('chat-' + label,
               channel_layer=message.channel_layer).send({
-                  # error here is that as_dict() cant convert User object to json
-                  # 'text': json.dumps(m.as_dict())
-                  'text': json.dumps(data)
+                  'text': json.dumps(m.as_dict())
               })
 
 
 @channel_session
 def ws_disconnect(message):
+    """
+    called when websocket is closed
+    """
     try:
         label = message.channel_session['room']
         room = Relationship.objects.get(label=label)

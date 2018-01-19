@@ -15,6 +15,7 @@ class ChatView(ListAPIView):
     def get_queryset(self):
 
         if 'label' not in self.kwargs:
+            # wrong url setting
             return []
 
         label = self.kwargs['label']

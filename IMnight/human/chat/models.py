@@ -6,8 +6,10 @@ from human.models import Relationship
 
 
 class Message(models.Model):
+    # ISSUE - if we use Relationship to determined room, then we cant have group talk
     room = models.ForeignKey(
         Relationship, on_delete=models.CASCADE, related_name='messages')
+    # User who send this message
     handle = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now, db_index=True)
@@ -21,4 +23,4 @@ class Message(models.Model):
 
     # parse for json to send
     def as_dict(self):
-        return {'handle': self.handle, 'message': self.message, 'timestamp': self.formatted_timestamp}
+        return {'handle': self.handle.username, 'message': self.message, 'timestamp': self.formatted_timestamp}
