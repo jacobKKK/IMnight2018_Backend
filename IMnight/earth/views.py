@@ -24,7 +24,7 @@ class DailyVocherView(ListAPIView):
 
 class StoreVocherView(ListAPIView):
     """
-    取得某特定用戶資料（Include Profile）
+    取得用戶的Vocher
     """
     permission_classes = (IsAuthenticated,)
     serializer_class = VocherSerializer
