@@ -13,13 +13,18 @@ testlog = logging.getLogger('testdevelop')
 class HoldingVocherManager(models.Manager):
 
     def get_vochers(self, user, storename=None):
-        vochers_pk = HoldingVocher.objects.filter(
-            user=user).values('vocher')
-        vochers = Vocher.objects.filter(pk__in=vochers_pk)
-        if storename is not None:
-            store = Store.objects.filter(storename=storename)
-            vochers = vochers.filter(store__in=store)
-        return vochers
+        try:
+            vochers_pk = HoldingVocher.objects.filter(
+                user=user).values('vocher')
+            vochers = Vocher.objects.filter(pk__in=vochers_pk)
+        except Exception as error:
+            testlog.error(error)
+            return Vocher.objects.none()
+        else:
+            if storename is not None:
+                store = Store.objects.filter(storename=storename)
+                vochers = vochers.filter(store__in=store)
+            return vochers
 
     def get_daily(self, user):
         try:
@@ -52,11 +57,13 @@ class HoldingVocherManager(models.Manager):
                 if(len(error_vochers) > 0):
                     for error_vocher in error_vochers:
                         error_vocher.used = True
-                    raise "Error because all vohcers are drawed, but there still some HoldingVocher.used=False"
+                    testlog.warning(
+                        "Error because all vohcers are drawed, but there still some HoldingVocher.used=False")
 
                 all_vochers = Vocher.objects.all()
                 if(len(all_vochers) != len(vochers)):
-                    raise "Error because all vohcers are drawed, but amount not equal to all vochers"
+                    testlog.warning(
+                        "Error because all vohcers are drawed, but amount not equal to all vochers")
 
                 vochers_num = len(vochers)
                 index = random.randint(0, vochers_num - 1)

@@ -60,14 +60,14 @@ class RelationshipManager(models.Manager):
             raise ValidationError(
                 "You can't get performers list from a performer")
 
-        performers = Relationship.objects.filter(client=user).all()
+        performers = Relationship.objects.filter(client=user)
         return performers
 
     def get_clients(self, user):
         if is_client(user):
             raise ValidationError("You can't get clients list from a client")
 
-        clients = Relationship.objects.filter(performer=user).all()
+        clients = Relationship.objects.filter(performer=user)
         return clients
 
     def get_daily(self, user):
@@ -87,14 +87,14 @@ class RelationshipManager(models.Manager):
             return daily_performer
         else:
             # not yet draw daily performer
-            own_relationship = Relationship.objects.filter(client=user).all()
+            own_relationship = Relationship.objects.filter(client=user)
             own_performer_pk = []
             for relationship in own_relationship:
                 own_performer_pk.append(relationship.performer.pk)
 
             try:
                 all_performers = User.objects.filter(
-                    groups__name='Performers').exclude(pk__in=own_performer_pk).all()
+                    groups__name='Performers').exclude(pk__in=own_performer_pk)
             except Exception as error:
                 testlog.error(error)
                 all_performers = []
