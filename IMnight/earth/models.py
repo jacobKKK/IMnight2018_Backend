@@ -77,17 +77,6 @@ class HoldingVocherManager(models.Manager):
                     return daily_vocher
 
 
-class HoldingVocher(models.Model):
-    vocher = models.ForeignKey(
-        Vocher, on_delete=models.CASCADE, related_name='vocher')
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='user')
-    used = models.BooleanField(default=False)
-    created = models.DateTimeField(default=timezone.now)
-
-    objects = HoldingVocherManager()
-
-
 class Store(models.Model):
     storename = models.TextField(blank=False, default="Store")
     img = models.URLField(
@@ -95,6 +84,9 @@ class Store(models.Model):
     title = models.TextField(null=True, blank=True)
     sub_title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.storename
 
 
 class Vocher(models.Model):
@@ -106,3 +98,20 @@ class Vocher(models.Model):
 
     store = models.ForeignKey(
         Store, on_delete=models.CASCADE, related_name='store')
+
+    def __str__(self):
+        return "%s  %s" % (self.store, self.title)
+
+
+class HoldingVocher(models.Model):
+    vocher = models.ForeignKey(
+        Vocher, on_delete=models.CASCADE, related_name='vocher')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='user')
+    used = models.BooleanField(default=False)
+    created = models.DateTimeField(default=timezone.now)
+
+    objects = HoldingVocherManager()
+
+    def __str__(self):
+        return "%s have %s" % (self.user, self.vocher)

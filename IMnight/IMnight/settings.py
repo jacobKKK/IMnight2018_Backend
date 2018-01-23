@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     # self create apps
     'accounts',
     'human',
+    'earth',
 ]
 
 SITE_ID = 1
