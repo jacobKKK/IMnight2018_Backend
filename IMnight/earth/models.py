@@ -11,21 +11,15 @@ testlog = logging.getLogger('testdevelop')
 
 
 class HoldingVocherManager(models.Manager):
-    def use_vocher(self, user, vocher):
-        try:
-            vochers = HoldingVocher.objects.filter(
-                user=user).filter(vocher=vocher).all()
-        except Exception as error:
-            testlog.error(error)
-        else:
-            if (len(vochers) > 1):
-                testlog.error("A user can't hold more than one vocher.")
-            for vocher in vochers:
-                vocher.used = True
 
-    def get_vochers(self, user):
-        vochers = HoldingVocher.objects.filter(user=user).values('vocher')
-        return pvochers
+    def get_vochers(self, user, storename=None):
+        vochers_pk = HoldingVocher.objects.filter(
+            user=user).values('vocher')
+        vochers = Vocher.objects.filter(pk__in=vochers_pk)
+        if storename is not None:
+            store = Store.objects.filter(storename=storename)
+            vochers = vochers.filter(store__in=store)
+        return vochers
 
     def get_daily(self, user):
         try:
@@ -38,28 +32,43 @@ class HoldingVocherManager(models.Manager):
         if daily_vocher:
             return daily_vocher
         else:
-            own_HoldingVocher = HoldingVocher.objects.filter(user=user).all()
+            own_HoldingVocher = HoldingVocher.objects.filter(user=user)
             own_vocher_pk = []
             for holdingVocher in own_HoldingVocher:
                 own_vocher_pk.append(holdingVocher.vocher.pk)
 
             try:
-                all_vochers = Vocher.objects.filter.exclude(
-                    pk__in=own_vocher_pk).all()
+                remain_vochers = Vocher.objects.exclude(
+                    pk__in=own_vocher_pk)
             except Exception as error:
                 testlog.error(error)
-                all_vochers = []
+                remain_vochers = []
 
-            """random choice a performer and return"""
-            num = len(all_vochers)
+            num = len(remain_vochers)
             # check if already draw all performers
             if num <= 0:
-                # all performer are draw
-                return HoldingVocher.objects.none()
+                vochers = HoldingVocher.objects.filter(user=user)
+                error_vochers = vocher.filter(used=False)
+                if(len(error_vochers) > 0):
+                    for error_vocher in error_vochers:
+                        error_vocher.used = True
+                    raise "Error because all vohcers are drawed, but there still some HoldingVocher.used=False"
+
+                all_vochers = Vocher.objects.all()
+                if(len(all_vochers) != len(vochers)):
+                    raise "Error because all vohcers are drawed, but amount not equal to all vochers"
+
+                vochers_num = len(vochers)
+                index = random.randint(0, vochers_num - 1)
+                daily_vocher = vochers[index]
+                daily_vocher.reset()
+                # return objects must be iterable
+                daily_vocher = [daily_vocher]
+                return daily_vocher
 
             else:
                 index = random.randint(0, num - 1)
-                vocher = all_vochers[index]
+                vocher = remain_vochers[index]
 
                 try:
                     daily_vocher = self.create(
@@ -97,7 +106,7 @@ class Vocher(models.Model):
     description = models.TextField(null=True, blank=True)
 
     store = models.ForeignKey(
-        Store, on_delete=models.CASCADE, related_name='store')
+        Store, on_delete=models.CASCADE)
 
     def __str__(self):
         return "%s  %s" % (self.store, self.title)
@@ -105,9 +114,9 @@ class Vocher(models.Model):
 
 class HoldingVocher(models.Model):
     vocher = models.ForeignKey(
-        Vocher, on_delete=models.CASCADE, related_name='vocher')
+        Vocher, on_delete=models.CASCADE)
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='user')
+        User, on_delete=models.CASCADE)
     used = models.BooleanField(default=False)
     created = models.DateTimeField(default=timezone.now)
 
@@ -115,3 +124,13 @@ class HoldingVocher(models.Model):
 
     def __str__(self):
         return "%s have %s" % (self.user, self.vocher)
+
+    def reset(self):
+        self.created = timezone.now
+        self.used = False
+
+    def used(self):
+        if(self.used != False):
+            raise "A Vocher can't used twice"
+        else:
+            self.used = True

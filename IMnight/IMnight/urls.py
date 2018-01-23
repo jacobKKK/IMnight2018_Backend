@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^auth/', include('accounts.urls'), name='Authorization'),
     url(r'^auth/registration/', include('accounts.registration.urls')),
     url(r'^auth/social/', include('accounts.social.urls')),
-    url(r'^human/', include('human.urls'))
+    url(r'^human/', include('human.urls')),
+    url(r'^earth/', include('earth.urls')),
 ]
