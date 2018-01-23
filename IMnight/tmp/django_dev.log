@@ -909,3 +909,73 @@ Traceback (most recent call last):
 AttributeError: Got AttributeError when attempting to get a value for field `store` on serializer `VocherSerializer`.
 The serializer field might be named incorrectly and not match any attribute or key on the `QuerySet` instance.
 Original exception text was: 'QuerySet' object has no attribute 'store'.
+ERROR - [2018-01-23 16:32:11] (exception 80447 123145370038272) Internal Server Error: /admin/earth/holdingvocher/1/change/
+Traceback (most recent call last):
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/channels/handler.py", line 243, in process_exception_by_middleware
+    return super(AsgiHandler, self).process_exception_by_middleware(exception, request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 574, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/utils/decorators.py", line 142, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/views/decorators/cache.py", line 44, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 223, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1556, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/utils/decorators.py", line 62, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/utils/decorators.py", line 142, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/utils/decorators.py", line 58, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1450, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1490, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1026, in save_model
+    obj.save()
+  File "/Users/YuChih/Project/IMnight2018_Backend/IMnight/earth/models.py", line 151, in save
+    holdingVocher_label = slugify(relationship_label)
+NameError: name 'slugify' is not defined
+ERROR - [2018-01-23 16:32:59] (exception 80460 123145404776448) Internal Server Error: /admin/earth/holdingvocher/2/change/
+Traceback (most recent call last):
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/channels/handler.py", line 243, in process_exception_by_middleware
+    return super(AsgiHandler, self).process_exception_by_middleware(exception, request)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 574, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/utils/decorators.py", line 142, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/views/decorators/cache.py", line 44, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 223, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1556, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/utils/decorators.py", line 62, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/utils/decorators.py", line 142, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/utils/decorators.py", line 58, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1450, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1490, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1026, in save_model
+    obj.save()
+  File "/Users/YuChih/Project/IMnight2018_Backend/IMnight/earth/models.py", line 152, in save
+    holdingVocher_label = slugify(relationship_label)
+NameError: name 'relationship_label' is not defined

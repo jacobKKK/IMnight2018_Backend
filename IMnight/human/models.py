@@ -157,9 +157,16 @@ class Relationship(models.Model):
                 "self.client and slef.performer can't be same person")
 
         # create unique label used for chatroom
-        hashkey = self.client.username + self.performer.username
+        hashkey = self.client.username + \
+            self.performer.username + str(self.created)
         relationship_label = hash(hashkey) % (10 ** 20)
         relationship_label = slugify(relationship_label)
-        self.label = relationship_label
+        try:
+            self.label = relationship_label
+        except Exception as error:
+            testlog.error(error)
+            relationship_label = hash(hashkey**2) % (10 ** 20)
+            relationship_label = slugify(relationship_label)
+            self.label = relationship_label
 
         super(Relationship, self).save(*args, **kwargs)

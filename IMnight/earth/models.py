@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 
 
@@ -127,6 +128,8 @@ class HoldingVocher(models.Model):
     used = models.BooleanField(default=False)
     created = models.DateTimeField(default=timezone.now)
 
+    label = models.SlugField(unique=True)
+
     objects = HoldingVocherManager()
 
     def __str__(self):
@@ -141,3 +144,18 @@ class HoldingVocher(models.Model):
             raise "A Vocher can't used twice"
         else:
             self.used = True
+
+    def save(self, *args, **kwargs):
+        # create unique label used for chatroom
+        hashkey = self.user.username + self.vocher.title + str(self.created)
+        holdingVocher_label = hash(hashkey) % (10 ** 20)
+        holdingVocher_label = slugify(holdingVocher_label)
+        try:
+            self.label = holdingVocher_label
+        except Exception as error:
+            testlog.error(error)
+            holdingVocher_label = hash(hashkey**2) % (10 ** 20)
+            holdingVocher_label = slugify(holdingVocher_label)
+            self.label = holdingVocher_label
+
+        super(HoldingVocher, self).save(*args, **kwargs)
