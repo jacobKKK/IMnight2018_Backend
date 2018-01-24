@@ -65,7 +65,7 @@ class HoldingVocherManager(models.Manager):
             # check if already draw all performers
             if num <= 0:
                 vochers = HoldingVocher.objects.filter(user=user)
-                error_vochers = vocher.filter(used=False)
+                error_vochers = vochers.filter(be_used=False)
                 if(len(error_vochers) > 0):
                     for error_vocher in error_vochers:
                         error_vocher.used = True
