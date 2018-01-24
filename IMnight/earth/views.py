@@ -19,7 +19,7 @@ def hello_world(request):
         if HoldingVocher.objects.used_vocher(request.user, request.data['label']):
             return Response("Used Succeesslly", status=status.HTTP_201_CREATED)
         else:
-            return Response("Error occured when vocher used", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Error occured when vocher used", status=HTTP_406_NOT_ACCEPTABLE)
     else:
         return Response("parameter \'lable\' not in scoope", status=status.HTTP_400_BAD_REQUEST)
 
