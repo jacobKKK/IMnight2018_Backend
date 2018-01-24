@@ -21,7 +21,7 @@ def hello_world(request):
         else:
             return Response({"message": "Error occured when vocher used"}, status=status.HTTP_406_NOT_ACCEPTABLE)
     else:
-        return Response({"message": "parameter \'lable\' not in scoope"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "parameter \'label\' not in scoope"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class DailyVocherView(ListAPIView):
@@ -43,7 +43,7 @@ class StoreVocherView(ListAPIView):
     取得用戶的Vocher
     """
     permission_classes = (IsAuthenticated,)
-    serializer_class = VocherSerializer
+    serializer_class = HoldingVocherSerializer
 
     def get_queryset(self):
         """
