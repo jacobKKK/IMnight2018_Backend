@@ -17,11 +17,11 @@ from earth.serializers import HoldingVocherSerializer, VocherSerializer, UseVoch
 def hello_world(request):
     if ('label' in request.data):
         if HoldingVocher.objects.used_vocher(request.user, request.data['label']):
-            return Response("Used Succeesslly", status=status.HTTP_201_CREATED)
+            return Response({"message": "Used Succeesslly"}, status=status.HTTP_201_CREATED)
         else:
-            return Response("Error occured when vocher used", status=HTTP_406_NOT_ACCEPTABLE)
+            return Response({"message": "Error occured when vocher used"}, status=status.HTTP_406_NOT_ACCEPTABLE)
     else:
-        return Response("parameter \'lable\' not in scoope", status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "parameter \'lable\' not in scoope"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class DailyVocherView(ListAPIView):
