@@ -26,17 +26,17 @@ class HoldingVocherManager(models.Manager):
 
     def get_vochers(self, user, storename=None):
         try:
-            vochers_pk = HoldingVocher.objects.filter(
-                user=user).values('vocher')
-            vochers = Vocher.objects.filter(pk__in=vochers_pk)
+            holdingVochers = HoldingVocher.objects.filter(user=user)
         except Exception as error:
             testlog.error(error)
-            return Vocher.objects.none()
+            return HoldingVocher.objects.none()
         else:
             if storename is not None:
                 store = Store.objects.filter(storename=storename)
-                vochers = vochers.filter(store__in=store)
-            return vochers
+                vochers = Vocher.objects.filter(store__in=store)
+                holdingVochers = holdingVochers.filter(vocher__in=vochers)
+
+            return holdingVochers
 
     def get_daily(self, user):
         try:
@@ -136,7 +136,7 @@ class HoldingVocher(models.Model):
         Vocher, on_delete=models.CASCADE)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE)
-    used = models.BooleanField(default=False)
+    be_used = models.BooleanField(default=False)
     created = models.DateTimeField(default=timezone.now)
 
     label = models.SlugField(unique=True)
@@ -148,13 +148,14 @@ class HoldingVocher(models.Model):
 
     def reset(self):
         self.created = timezone.now
-        self.used = False
+        self.be_used = False
 
     def used(self):
-        if(self.used != False):
+        if(self.be_used != False):
             raise Exception("A Vocher can't used twice")
         else:
-            self.used = True
+            self.be_used = True
+            self.save()
 
     def save(self, *args, **kwargs):
         # create unique label used for chatroom
