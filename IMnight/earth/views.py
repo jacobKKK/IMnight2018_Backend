@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
@@ -10,13 +10,14 @@ from earth.models import HoldingVocher, Store, Vocher
 from earth.serializers import HoldingVocherSerializer, VocherSerializer
 
 
-class UseVocherView(APIView):
+class UseVocherView(GenericAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = VocherSerializer
+    serializer_class = HoldingVocherSerializer
 
     def post(self, request, format=None):
-        serializer = VocherSerializer(data=request.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if 'label' in self.kwargs:
+            label = self.kwargs['label']
+            queryset = HoldingVocher.objects.used_vocher(user, label)
 
 
 class DailyVocherView(ListAPIView):

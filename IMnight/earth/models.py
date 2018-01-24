@@ -12,6 +12,11 @@ testlog = logging.getLogger('testdevelop')
 
 
 class HoldingVocherManager(models.Manager):
+    def used_vocher(self, user, label):
+        holdingVochers = HoldingVocher.objects.filter(
+            user=user).filter(label=label)
+        for vocher in holdingVochers:
+            vocher.used()
 
     def get_vochers(self, user, storename=None):
         try:
