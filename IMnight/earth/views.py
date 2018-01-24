@@ -4,20 +4,24 @@ from __future__ import unicode_literals
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
+
 
 from earth.models import HoldingVocher, Store, Vocher
-from earth.serializers import HoldingVocherSerializer, VocherSerializer
+from earth.serializers import HoldingVocherSerializer, VocherSerializer, UseVocherSerializer
 
 
-class UseVocherView(GenericAPIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = HoldingVocherSerializer
-
-    def post(self, request, format=None):
-        if 'label' in self.kwargs:
-            label = self.kwargs['label']
-            queryset = HoldingVocher.objects.used_vocher(user, label)
+@api_view(['POST'])
+def hello_world(request):
+    if ('label' in request.data):
+        if HoldingVocher.objects.used_vocher(request.user, request.data['label']):
+            return Response("Used Succeesslly", status=status.HTTP_201_CREATED)
+        else:
+            return Response("Error occured when vocher used", status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response("parameter \'lable\' not in scoope", status=status.HTTP_400_BAD_REQUEST)
 
 
 class DailyVocherView(ListAPIView):

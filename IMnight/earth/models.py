@@ -16,7 +16,13 @@ class HoldingVocherManager(models.Manager):
         holdingVochers = HoldingVocher.objects.filter(
             user=user).filter(label=label)
         for vocher in holdingVochers:
-            vocher.used()
+            try:
+                vocher.used()
+                return True
+            except BaseException as error:
+                testlog.error(error)
+
+        return False
 
     def get_vochers(self, user, storename=None):
         try:
@@ -146,7 +152,7 @@ class HoldingVocher(models.Model):
 
     def used(self):
         if(self.used != False):
-            raise "A Vocher can't used twice"
+            raise Exception("A Vocher can't used twice")
         else:
             self.used = True
 

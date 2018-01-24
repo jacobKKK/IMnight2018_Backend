@@ -25,3 +25,9 @@ class HoldingVocherSerializer(serializers.ModelSerializer):
     class Meta:
         model = HoldingVocher
         fields = '__all__'
+
+
+class UseVocherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HoldingVocher
+        fields = ('label',)
