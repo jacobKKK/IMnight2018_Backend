@@ -58,8 +58,16 @@ class Task(models.Model):
 
 
 class ProgressTaskManager(models.Manager):
-    def get_progress_task(self, user):
-        return ProgressTask.objects.filter(user=user)
+    def get_progress_task(self, user, task_label=None):
+        if task_label is not None:
+            tasks = Task.objects.filter(label=task_label)
+            if tasks is not None:
+                return ProgressTask.objects.filter(user=user).filter(task__in=tasks)
+            else:
+                raise Exception(
+                    "this task label dosen't exist,  label=%s", task_label)
+        else:
+            return ProgressTask.objects.filter(user=user)
 
     def finish_task_by_label(self, user, task_label):
         tasks = Task.objects.filter(label=task_label)

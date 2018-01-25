@@ -23,7 +23,17 @@ class ProgressTaskView(ListAPIView):
     def get_queryset(self):
         user = self.request.user
 
-        queryset = ProgressTask.objects.get_progress_task(user)
+        if 'label' in self.kwargs:
+            label = self.kwargs['label']
+            try:
+                queryset = ProgressTask.objects.get_progress_task(user, label)
+            except Exception as error:
+                testlog.warning(error)
+                queryset = []
+
+        else:
+            queryset = ProgressTask.objects.get_progress_task(user)
+
         return queryset
 
 
