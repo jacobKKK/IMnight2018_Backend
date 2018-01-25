@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'accounts',
     'human',
     'earth',
+    'lottery',
 ]
 
 SITE_ID = 1
