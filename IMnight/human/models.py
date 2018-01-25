@@ -18,17 +18,17 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    reward_list = models.ForeignKey(
-        'Reward', related_name='reward_list', on_delete=models.CASCADE)
+    # reward_list = models.ForeignKey(
+    #     'Reward', related_name='reward_list', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.User.username
 
 
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
@@ -211,7 +211,7 @@ class Task(models.Model):
 class Reward(models.Model):
     client = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='reward')
-    task = models.OneToOneField(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='reward')
     created = models.DateTimeField(default=timezone.now)
     rewarded = models.DateTimeField(null=True)
 
