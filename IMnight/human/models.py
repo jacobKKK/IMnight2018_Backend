@@ -22,7 +22,7 @@ class Profile(models.Model):
     #     'Reward', related_name='reward_list', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.User.username
+        return self.user.username
 
 
 @receiver(post_save, sender=User)
@@ -210,8 +210,9 @@ class Task(models.Model):
 
 class Reward(models.Model):
     client = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='reward')
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='reward')
+        User, on_delete=models.CASCADE, related_name='client')
+    task = models.ForeignKey(
+        Task, on_delete=models.CASCADE, related_name='reward')
     created = models.DateTimeField(default=timezone.now)
     rewarded = models.DateTimeField(null=True)
 
