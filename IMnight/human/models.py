@@ -210,14 +210,11 @@ class Task(models.Model):
 
 class Reward(models.Model):
     client = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='client')
+        User, on_delete=models.CASCADE)
     task = models.ForeignKey(
-        Task, on_delete=models.CASCADE, related_name='reward')
+        Task, on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now)
     rewarded = models.DateTimeField(null=True)
-
-    class Meta:
-        unique_together = ('client', 'task')
 
     def __str__(self):
         return "'%s' have a '%s' task created on %s. Done = %d" % s(self.client.username, self.task.name, self.created, self.done)
