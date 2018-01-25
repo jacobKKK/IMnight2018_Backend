@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-from human.models import Profile, Relationship, Reward, Task
+from human.models import Profile, Relationship
 from human.chat.models import Message
 
 
@@ -50,5 +50,3 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Profile)
 admin.site.register(Relationship, RelationshipAdmin)
 admin.site.register(Message, MessageAdmin)
-admin.site.register(Reward)
-admin.site.register(Task)

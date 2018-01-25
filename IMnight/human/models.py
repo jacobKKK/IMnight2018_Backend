@@ -18,11 +18,14 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    # reward_list = models.ForeignKey(
-    #     'Reward', related_name='reward_list', on_delete=models.CASCADE)
+    point = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     def __str__(self):
         return self.user.username
+
+    def add_point(self, reward):
+        self.point += reward
+        return self.point
 
 
 @receiver(post_save, sender=User)
@@ -51,16 +54,6 @@ def is_performer(user):
     user_instance = User.objects.filter(username=username).filter(
         groups__name__exact="Performers")
     if user_instance is not None:
-        return True
-    else:
-        return False
-
-
-def is_task(task):
-    name = task.name
-    name_insatance = Task.objects.filter(name=name)
-
-    if name_insatance is not None:
         return True
     else:
         return False
@@ -182,73 +175,3 @@ class Relationship(models.Model):
             self.label = relationship_label
 
         super(Relationship, self).save(*args, **kwargs)
-
-
-class Task(models.Model):
-    MAX_CREDIT = 10
-    MAX_CATEGORY = 3
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500)
-    due_date = models.DateTimeField(null=False)
-    credit = models.PositiveIntegerField(null=False)
-    activated = models.BooleanField(default=False)
-    category = models.IntegerField(default=1)
-
-    def __str__(self):
-        return "%s have %d credit, due in %s" % (self.name, self.credit, self.duedate)
-
-    def save(self, *args, **kwargs):
-        # Some identity check for the Task
-        if self.credit > self.MAX_CREDIT:
-            raise ValidationError(
-                "Warining: The max credit is up to %d" % self.MAX_CREDIT)
-        if self.category > self.MAX_CATEGORY or self.category < 1:
-            raise ValidationError(
-                "Warining: The category is valid")
-        super(Task, self).save(*args, **kwargs)
-
-
-class Reward(models.Model):
-    client = models.ForeignKey(
-        User, on_delete=models.CASCADE)
-    task = models.ForeignKey(
-        Task, on_delete=models.CASCADE)
-    created = models.DateTimeField(default=timezone.now)
-    rewarded = models.DateTimeField(null=True)
-
-    def __str__(self):
-        return "'%s' have a '%s' task created on %s. Done = %d" % s(self.client.username, self.task.name, self.created, self.done)
-
-    def save(self, *args, **kwargs):
-        # Some identity check for the Reward
-        if not is_client(self.client):
-            raise ValidationError("self.client is not in Clients Group.")
-        if not is_task(self.task):
-            raise ValidationError("self.task is not in Tasks Group.")
-        if datetime.datetime.now() > self.task.due_date:
-            raise ValidationError("self.task.name have closed.")
-        # create unique label used for chatroom
-        super(Reward, self).save(*args, **kwargs)
-
-
-class RewardManager(models.Manager):
-    def get_client_rewards(self, user):
-        if not is_client(user):
-            raise ValidationError("You can't get reward list from a client")
-
-        rewards = Reward.objects.filter(client=user)
-        return rewards
-
-    def get_client_rewardeds(self, user):
-        if not is_client(user):
-            raise ValidationError("You can't get reward list from a client")
-
-        rewards = Reward.objects.filter(client=user, rewarded=True)
-        return rewards
-
-    def get_client_unrewardeds(self, user):
-        if not is_client(user):
-            raise ValidationError("You can't get reward list from a client")
-
-        rewards = Reward.objects.filter(client=user, rewarded=False)
-        return rewards

@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.schemas import AutoSchema
 import coreapi
 
-from human.models import Relationship, Reward
+from human.models import Relationship
 from human.serializers import UserDetailsSerializer, RelationshipSerializer, RewardSerializer
 
 import logging
@@ -89,15 +89,4 @@ class DailyPerformerView(ListAPIView):
         user = self.request.user
 
         queryset = Relationship.objects.get_daily(user)
-        return queryset
-
-
-class RewardView(ListAPIView):
-    permission_classes = (IsAuthenticated, )
-    serializer_class = RewardSerializer()
-
-    def get_queryset(self):
-        user = self.request.user
-
-        queryset = Reward.objects.get_client_rewards(user)
         return queryset
