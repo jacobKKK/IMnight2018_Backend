@@ -18,8 +18,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    task_list = name = models.ForeignKey(
-        'Reward', related_name='reward', on_delete=models.CASCADE)
+    reward_list = models.ForeignKey(
+        'Reward', related_name='reward_list', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.User.username
@@ -210,13 +210,13 @@ class Task(models.Model):
 
 class Reward(models.Model):
     client = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='client')
+        User, on_delete=models.CASCADE, related_name='reward')
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now)
     rewarded = models.DateTimeField(null=True)
 
     class Meta:
-        unique_together = ('task', 'reward')
+        unique_together = ('client', 'task')
 
     def __str__(self):
         return "'%s' have a '%s' task created on %s. Done = %d" % s(self.client.username, self.task.name, self.created, self.done)

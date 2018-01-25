@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from human.models import Profile, Relationship
+from human.models import Profile, Relationship,  Reward, Task
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -64,4 +64,3 @@ class RewardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reward
         fields = ('client', 'task', 'rewarded')
-        read_only_fields =
