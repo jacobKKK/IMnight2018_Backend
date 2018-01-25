@@ -11,7 +11,7 @@ from rest_framework.schemas import AutoSchema
 import coreapi
 
 from human.models import Relationship
-from human.serializers import UserDetailsSerializer, RelationshipSerializer, RewardSerializer
+from human.serializers import UserDetailsSerializer, RelationshipSerializer
 
 import logging
 testlog = logging.getLogger('testdevelop')
