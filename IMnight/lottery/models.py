@@ -31,7 +31,7 @@ def is_task(task_label):
 
 class Task(models.Model):
     name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500)
+    description = models.CharField(blank=True, max_length=500)
     due_date = models.DateTimeField(blank=False, null=False)
     credit = models.PositiveIntegerField(default=0, blank=False, null=False)
     activated = models.BooleanField(default=False)
@@ -40,7 +40,7 @@ class Task(models.Model):
     label = models.SlugField(unique=True)
 
     def __str__(self):
-        return "%s have %d credit, due in %s" % (self.name, self.credit, self.duedate)
+        return "%s have %d credit, due in %s" % (self.name, self.credit, self.due_date)
 
     def save(self, *args, **kwargs):
         hashkey = self.name + str(self.due_date)
@@ -54,7 +54,7 @@ class Task(models.Model):
             task_label = slugify(task_label)
             self.label = task_label
 
-        super(Relationship, self).save(*args, **kwargs)
+        super(Task, self).save(*args, **kwargs)
 
 
 class ProgressTaskManager(models.Manager):
@@ -74,8 +74,12 @@ class ProgressTaskManager(models.Manager):
         finished_task = []
         if tasks is not None:
             for task in tasks:
-                obj, created = ProgressTask.objects.get_or_create(
-                    user=user, task=task)
+                try:
+                    obj, created = ProgressTask.objects.get_or_create(
+                        user=user, task=task)
+                except Exception as error:
+                    testlog.error(error)
+
                 if created:
                     user.add_point(test.credit)
                     finished_task.append(obj)
@@ -106,11 +110,11 @@ class ProgressTask(models.Model):
     objects = ProgressTaskManager()
 
     def __str__(self):
-        return "'%s' have a '%s' task created on %s. Done = %d" % s(self.client.username, self.task.name, self.created, self.done)
+        return "'%s' have a '%s' task created on %s." % (self.user.username, self.task.name, self.last_active_date)
 
     def save(self, *args, **kwargs):
         # Some identity check for the ProgressTask
-        if datetime.datetime.now() > self.task.due_date:
+        if timezone.now() > self.task.due_date:
             raise Exception("this task have been closed.")
         # create unique label used for chatroom
         super(ProgressTask, self).save(*args, **kwargs)
