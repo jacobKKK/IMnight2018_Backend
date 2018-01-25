@@ -59,7 +59,7 @@ class Task(models.Model):
 
 class ProgressTaskManager(models.Manager):
     def get_progress_task(self, user):
-        return ProgressTaskManager.objects.filter(user=user)
+        return ProgressTask.objects.filter(user=user)
 
     def finish_task_by_label(self, user, task_label):
         tasks = Task.objects.filter(label=task_label)

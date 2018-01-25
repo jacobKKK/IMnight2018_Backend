@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
+from human.serializers import UserDetailsSerializer
 from lottery.models import ProgressTask, Task
 
 

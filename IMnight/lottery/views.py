@@ -4,13 +4,13 @@ from django.core.exceptions import ValidationError
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView, ListAPIView
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.schemas import AutoSchema
-import coreapi
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 
 from lottery.models import Task, ProgressTask
-from lottery.serializers import RewardSerializer
+from lottery.serializers import ProgressTaskSerializer
 
 import logging
 testlog = logging.getLogger('testdevelop')
@@ -18,7 +18,7 @@ testlog = logging.getLogger('testdevelop')
 
 class ProgressTaskView(ListAPIView):
     permission_classes = (IsAuthenticated, )
-    serializer_class = RewardSerializer()
+    serializer_class = ProgressTaskSerializer
 
     def get_queryset(self):
         user = self.request.user
