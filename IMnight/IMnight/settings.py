@@ -25,7 +25,7 @@ SECRET_KEY = 'ti#_4flcu1o_%!)rxqvujigi5=1=kl!9k9f(m^r1-+q8m+v*ub'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -103,14 +103,14 @@ WSGI_APPLICATION = 'IMnight.wsgi.application'
 # }
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'imnight_db',
-    #     'USER': 'YuChih',
-    #     'PASSWORD': '',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'imnight_backend',
+        'USER': 'django',
+        'PASSWORD': 'bnjaAKWULde^22=9$!fq',
+        'HOST': '140.112.106.45',
+        'PORT': '5432',
+    }
 }
 
 # Password validation
