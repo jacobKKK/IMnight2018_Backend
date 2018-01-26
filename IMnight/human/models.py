@@ -18,8 +18,6 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    # reward_list = models.ForeignKey(
-    #     'Reward', related_name='reward_list', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
@@ -184,6 +182,11 @@ class Relationship(models.Model):
         super(Relationship, self).save(*args, **kwargs)
 
 
+class TaskManager(models.Manager):
+    def get_Task(self, user):
+        return "jizz"
+
+
 class Task(models.Model):
     MAX_CREDIT = 10
     MAX_CATEGORY = 3
@@ -193,6 +196,8 @@ class Task(models.Model):
     credit = models.PositiveIntegerField(null=False)
     activated = models.BooleanField(default=False)
     category = models.IntegerField(default=1)
+
+    objects = TaskManager()
 
     def __str__(self):
         return "%s have %d credit, due in %s" % (self.name, self.credit, self.duedate)
@@ -210,7 +215,7 @@ class Task(models.Model):
 
 class Reward(models.Model):
     client = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='client')
+        User, on_delete=models.CASCADE, related_name='reward')
     task = models.ForeignKey(
         Task, on_delete=models.CASCADE, related_name='reward')
     created = models.DateTimeField(default=timezone.now)
@@ -232,26 +237,3 @@ class Reward(models.Model):
             raise ValidationError("self.task.name have closed.")
         # create unique label used for chatroom
         super(Reward, self).save(*args, **kwargs)
-
-
-class RewardManager(models.Manager):
-    def get_client_rewards(self, user):
-        if not is_client(user):
-            raise ValidationError("You can't get reward list from a client")
-
-        rewards = Reward.objects.filter(client=user)
-        return rewards
-
-    def get_client_rewardeds(self, user):
-        if not is_client(user):
-            raise ValidationError("You can't get reward list from a client")
-
-        rewards = Reward.objects.filter(client=user, rewarded=True)
-        return rewards
-
-    def get_client_unrewardeds(self, user):
-        if not is_client(user):
-            raise ValidationError("You can't get reward list from a client")
-
-        rewards = Reward.objects.filter(client=user, rewarded=False)
-        return rewards
