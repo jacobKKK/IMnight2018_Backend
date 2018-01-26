@@ -85,3 +85,9 @@ Traceback (most recent call last):
   File "/Users/YuChih/Project/IMnight2018_Backend/ENV/lib/python3.6/site-packages/django/db/backends/sqlite3/base.py", line 303, in execute
     return Database.Cursor.execute(self, query, params)
 django.db.utils.OperationalError: no such column: earth_holdingvocher.be_used
+WARNING - [2018-01-26 13:17:15] (base 5326 123145464414208) Not Found: /jets
+WARNING - [2018-01-26 13:17:18] (base 5326 123145464414208) Not Found: /jet
+WARNING - [2018-01-26 13:17:20] (base 5326 123145459159040) Not Found: /jet/
+WARNING - [2018-01-26 13:19:11] (base 5459 123145514328064) Not Found: /dashboard
+WARNING - [2018-01-26 13:19:17] (base 5459 123145509072896) Not Found: /jet/dashboard/
+WARNING - [2018-01-26 13:19:46] (base 5459 123145514328064) Not Found: /jet/dashboard/
