@@ -12,6 +12,7 @@ class Message(models.Model):
     # User who send this message
     handle = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
+    readed = models.BooleanField(default=False)
     timestamp = models.DateTimeField(default=timezone.now, db_index=True)
 
     def __str__(self):
