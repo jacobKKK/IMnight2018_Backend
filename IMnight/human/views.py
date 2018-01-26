@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView, ListAPIView
@@ -12,10 +13,16 @@ import coreapi
 from human.models import Relationship
 from human.serializers import UserDetailsSerializer, RelationshipSerializer
 
+import logging
+testlog = logging.getLogger('testdevelop')
+
 UserModel = get_user_model()
 
 
 class SelfDetailsView(RetrieveUpdateAPIView):
+    """
+    取得用戶自己的個人資料（Include Profile）
+    """
     serializer_class = UserDetailsSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -32,6 +39,9 @@ class SelfDetailsView(RetrieveUpdateAPIView):
 
 
 class UserDetailsView(ListAPIView):
+    """
+    取得某特定用戶資料（Include Profile）
+    """
     permission_classes = (IsAuthenticated,)
     serializer_class = UserDetailsSerializer
 
@@ -48,14 +58,35 @@ class UserDetailsView(ListAPIView):
 
 
 class RelationshipDetailsView(ListAPIView):
+    """
+    取得用戶自己以抽過的performer
+    """
     permission_classes = (IsAuthenticated,)
     serializer_class = RelationshipSerializer
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Relationship.objects.filter(client=user)
-        """
-        這裡有Bug 
-        """
-        # queryset = Relationship.objects.get_performers(user)
+
+        try:
+            queryset = Relationship.objects.get_performers(user)
+        except ValidationError as error:
+            testlog.error(error)
+        except Exception as error:
+            testlog.warning(error)
+        else:
+            return queryset
+
+
+class DailyPerformerView(ListAPIView):
+    """
+    取得當日的daily performer
+    當所有perfromer都被抽完之後會return []
+    """
+    permission_classes = (IsAuthenticated, )
+    serializer_class = RelationshipSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+
+        queryset = Relationship.objects.get_daily(user)
         return queryset
