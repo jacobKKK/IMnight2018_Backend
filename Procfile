@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath IMnight IMnight.wsgi
+web: gunicorn IMnight.wsgi --log-file -
