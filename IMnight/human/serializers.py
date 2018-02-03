@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from human.models import Profile, Relationship,  Reward, Task
+from human.models import Profile, Relationship
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -46,21 +46,3 @@ class RelationshipSerializer(serializers.ModelSerializer):
 
         fields = ('client', 'performer', 'created')
         # fields = '__all__'
-
-
-class TaskSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Task
-        fields = ('name', 'description', 'due_date',
-                  'credit', 'activated')
-        read_only_fields = ('credit')
-
-
-class RewardSerializer(serializers.ModelSerializer):
-    task = TaskSerializer(required=True)
-    client = UserDetailsSerializer(required=True)
-
-    class Meta:
-        model = Reward
-        fields = ('client', 'task', 'rewarded')

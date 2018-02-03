@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^auth/social/', include('accounts.social.urls')),
     url(r'^human/', include('human.urls')),
     url(r'^earth/', include('earth.urls')),
+    url(r'^lottery/', include('lottery.urls')),
 ]
