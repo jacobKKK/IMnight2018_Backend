@@ -22,6 +22,9 @@ schema_view = get_swagger_view(title='API Endpoint')
 urlpatterns = [
     url(r'^$', schema_view),
     url(r'^admin/', admin.site.urls),
+    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    url(r'^jet/dashboard/', include('jet.dashboard.urls',
+                                    'jet-dashboard')),  # Django JET dashboard URLS
     url(r'^auth/', include('accounts.urls'), name='Authorization'),
     url(r'^auth/registration/', include('accounts.registration.urls')),
     url(r'^auth/social/', include('accounts.social.urls')),
