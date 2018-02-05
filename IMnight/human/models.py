@@ -43,7 +43,7 @@ def is_client(user):
     username = user.username
     user_instance = User.objects.filter(username=username).filter(
         groups__name__exact="Clients")
-    if user_instance is not None:
+    if user_instance:
         return True
     else:
         return False
@@ -53,7 +53,7 @@ def is_performer(user):
     username = user.username
     user_instance = User.objects.filter(username=username).filter(
         groups__name__exact="Performers")
-    if user_instance is not None:
+    if user_instance:
         return True
     else:
         return False

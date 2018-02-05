@@ -23,7 +23,7 @@ TASK_CATEGORY_CHOICE = (
 def is_task(task_label):
     tasks = Task.objects.filter(label=task_label)
 
-    if task is not None:
+    if task:
         return True
     else:
         return False
