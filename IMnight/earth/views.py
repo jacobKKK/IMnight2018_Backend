@@ -14,7 +14,7 @@ from earth.serializers import HoldingVocherSerializer, VocherSerializer, UseVoch
 
 
 @api_view(['POST'])
-def hello_world(request):
+def use_vocher(request):
     if ('label' in request.data):
         if HoldingVocher.objects.used_vocher(request.user, request.data['label']):
             return Response({"message": "Used Succeesslly"}, status=status.HTTP_201_CREATED)

@@ -25,9 +25,9 @@ urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     url(r'^jet/dashboard/', include('jet.dashboard.urls',
                                     'jet-dashboard')),  # Django JET dashboard URLS
-    url(r'^auth/', include('accounts.urls'), name='Authorization'),
-    url(r'^auth/registration/', include('accounts.registration.urls')),
-    url(r'^auth/social/', include('accounts.social.urls')),
+    url(r'^accounts/', include('accounts.urls'), name='Authorization'),
+    url(r'^accounts/registration/', include('accounts.registration.urls')),
+    url(r'^accounts/social/', include('accounts.social.urls')),
     url(r'^human/', include('human.urls')),
     url(r'^earth/', include('earth.urls')),
     url(r'^lottery/', include('lottery.urls')),
