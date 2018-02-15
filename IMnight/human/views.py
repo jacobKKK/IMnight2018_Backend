@@ -8,6 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.schemas import AutoSchema
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
 import coreapi
 
 from human.models import Relationship
@@ -90,3 +92,13 @@ class DailyPerformerView(ListAPIView):
 
         queryset = Relationship.objects.get_daily(user)
         return queryset
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def dailyStatusCheck(request):
+    user = request.user
+    is_drawn_daily_performer = Relationship.objects.check_daily(user)
+    return Response(
+        {"daily_performer": is_drawn_daily_performer}
+    )

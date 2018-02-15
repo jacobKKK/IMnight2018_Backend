@@ -130,6 +130,18 @@ class RelationshipManager(models.Manager):
                     daily_performer = [daily_performer]
                     return daily_performer
 
+    def check_daily(self, user):
+        try:
+            daily_performer = Relationship.objects.filter(
+                client=user).filter(created__date=datetime.date.today())
+        except Exception as error:
+            testlog.error(error)
+            return False
+        if daily_performer:
+            return True
+        else:
+            return False
+
 
 class Relationship(models.Model):
     client = models.ForeignKey(
