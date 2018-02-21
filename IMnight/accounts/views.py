@@ -52,8 +52,8 @@ def dailyStatusCheck(request):
     is_drawn_daily_performer = Relationship.objects.check_daily(user)
     is_drawn_daily_vocher = HoldingVocher.objects.check_daily(user)
     return Response(
-        {"daily_performer": is_drawn_daily_performer,
-         "daily_vocher": is_drawn_daily_vocher}
+        {"performer_drawn": is_drawn_daily_performer,
+         "vocher_drawn": is_drawn_daily_vocher}
     )
 
 
