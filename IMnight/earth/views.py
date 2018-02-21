@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -14,6 +14,7 @@ from earth.serializers import HoldingVocherSerializer, VocherSerializer, UseVoch
 
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def use_vocher(request):
     if ('label' in request.data):
         if HoldingVocher.objects.used_vocher(request.user, request.data['label']):

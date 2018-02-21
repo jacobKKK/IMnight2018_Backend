@@ -14,6 +14,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import api_view
+from rest_framework import status
 
 from accounts.serializers import (
     TokenSerializer, UserDetailsSerializer, LoginSerializer,
@@ -28,6 +30,17 @@ sensitive_post_parameters_m = method_decorator(
         'password', 'old_password', 'new_password1', 'new_password2'
     )
 )
+
+
+@api_view(['GET'])
+def check_login(request):
+    print(request.auth)
+    if request.auth:
+        return Response({"auth_status": True},
+                        status=status.HTTP_201_CREATED)
+    else:
+        return Response({"auth_status": False},
+                        status=status.HTTP_201_CREATED)
 
 
 class LoginView(GenericAPIView):
