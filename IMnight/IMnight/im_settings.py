@@ -6,10 +6,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-# CORS_ORIGIN_WHITELIST = (
-#     '140.112.24.119',
-#     '140.112.24.56'
-# )
+CORS_ORIGIN_WHITELIST = (
+    '140.112.24.119:8000',
+    '140.112.24.56:8000',
+    '140.112.4.184:40131',
+)
 
 
 # Allow all host headers.
