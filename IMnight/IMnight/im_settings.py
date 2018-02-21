@@ -12,6 +12,12 @@ CORS_ORIGIN_WHITELIST = (
     '140.112.4.184:40131',
 )
 
+CSRF_TRUSTED_ORIGINS = (
+    '140.112.24.119:8000',
+    '140.112.24.56:8000',
+    '140.112.4.184:40131',
+)
+
 
 # Allow all host headers.
 ALLOWED_HOSTS = ['140.112.106.45', 'ntu.im']
