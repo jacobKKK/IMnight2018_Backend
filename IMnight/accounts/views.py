@@ -8,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
+from django.contrib.auth.models import AnonymousUser
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -34,8 +35,8 @@ sensitive_post_parameters_m = method_decorator(
 
 @api_view(['GET'])
 def check_login(request):
-    print(request.auth)
-    if request.auth:
+    print(request.user.is_authenticated)
+    if request.user.is_authenticated:
         return Response({"auth_status": True},
                         status=status.HTTP_201_CREATED)
     else:
