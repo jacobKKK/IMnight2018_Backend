@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from human.views import SelfDetailsView, UserDetailsView, RelationshipDetailsView, DailyPerformerView, dailyStatusCheck
+from human.views import SelfDetailsView, UserDetailsView, RelationshipDetailsView, DailyPerformerView
 from human.chat.views import ChatView
 
 urlpatterns = [
@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^user/(?P<username>.+)/$', UserDetailsView.as_view()),
     url(r'^performer/list/$', RelationshipDetailsView.as_view()),
     url(r'^daily/$', DailyPerformerView.as_view()),
-    url(r'^check/daily', dailyStatusCheck),
 
     url(r'^chat/(?P<label>.+)/$', ChatView.as_view()),
 ]

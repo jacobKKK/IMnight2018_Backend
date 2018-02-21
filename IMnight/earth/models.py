@@ -104,6 +104,18 @@ class HoldingVocherManager(models.Manager):
                     daily_vocher = [daily_vocher]
                     return daily_vocher
 
+    def check_daily(self, user):
+        try:
+            daily_vocher = HoldingVocher.objects.filter(
+                user=user).filter(created__date=datetime.date.today())
+        except Exception as error:
+            testlog.error(error)
+            return False
+        if daily_vocher:
+            return True
+        else:
+            return False
+
 
 class Store(models.Model):
     title = models.TextField(blank=False, default="Store")

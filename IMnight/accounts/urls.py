@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from accounts.views import (
     LoginView, LogoutView, PasswordChangeView,
-    PasswordResetView, PasswordResetConfirmView, check_login
+    PasswordResetView, PasswordResetConfirmView, check_login, dailyStatusCheck
 )
 
 urlpatterns = [
@@ -18,4 +18,5 @@ urlpatterns = [
         name='rest_password_change'),
 
     url(r'^check/login/$', check_login),
+    url(r'^check/daily', dailyStatusCheck),
 ]

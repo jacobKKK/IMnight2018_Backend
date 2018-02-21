@@ -15,7 +15,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 
 from accounts.serializers import (
@@ -25,6 +25,9 @@ from accounts.serializers import (
 )
 from .models import TokenModel
 from .utils import jwt_encode, create_token
+
+from human.models import Relationship
+from earth.models import HoldingVocher
 
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters(
@@ -37,11 +40,21 @@ sensitive_post_parameters_m = method_decorator(
 def check_login(request):
     print(request.user.is_authenticated)
     if request.user.is_authenticated:
-        return Response({"auth_status": True},
-                        status=status.HTTP_201_CREATED)
+        return Response({"auth_status": True})
     else:
-        return Response({"auth_status": False},
-                        status=status.HTTP_201_CREATED)
+        return Response({"auth_status": False})
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def dailyStatusCheck(request):
+    user = request.user
+    is_drawn_daily_performer = Relationship.objects.check_daily(user)
+    is_drawn_daily_vocher = HoldingVocher.objects.check_daily(user)
+    return Response(
+        {"daily_performer": is_drawn_daily_performer,
+         "daily_vocher": is_drawn_daily_vocher}
+    )
 
 
 class LoginView(GenericAPIView):

@@ -92,13 +92,3 @@ class DailyPerformerView(ListAPIView):
 
         queryset = Relationship.objects.get_daily(user)
         return queryset
-
-
-@api_view(['GET'])
-@permission_classes((IsAuthenticated,))
-def dailyStatusCheck(request):
-    user = request.user
-    is_drawn_daily_performer = Relationship.objects.check_daily(user)
-    return Response(
-        {"daily_performer": is_drawn_daily_performer}
-    )
